@@ -86,3 +86,5 @@ const partTwo = async (): Promise<number> => {
 
   return result;
 };
+
+export { partOne, partTwo };
