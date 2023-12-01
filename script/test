@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# script/test: Run the test suite for the application.
+
+UPDATE=true
+
+for arg in "$@"
+do
+  case $arg in
+    --skip-update)
+      UPDATE=false
+      ;;
+  esac
+  shift
+done
+
+if [ "$UPDATE" = true ]; then
+  echo "==> Updating..."
+  script/update
+fi
+
+echo "==> Linting the code..."
+bun --bun run lint
+
+echo "==> Testing the code..."
+bun test

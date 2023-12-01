@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# script/update: Update the application to run for its current checkout.
+
+echo "==> Bootstrapping..."
+script/bootstrap

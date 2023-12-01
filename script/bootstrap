@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# script/bootstrap: Resolve all dependencies that the application requires to
+#                   run.
+
+if !(brew ls --versions bun > /dev/null); then
+  echo "==> Installing Bun..."
+  brew tap oven-sh/bun
+  brew install bun
+fi
+
+echo "==> Installing Bun packages..."
+bun install
