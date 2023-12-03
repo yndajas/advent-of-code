@@ -1,9 +1,9 @@
-const getInput = async (): Promise<string> => {
-  return Bun.file('./2023/01/input').text()
-}
+import { getInput } from '../inputUtils'
+
+const inputPath = './2023/01/input'
 
 const partOne = async (): Promise<number> => {
-  const input = await getInput()
+  const input = await getInput(inputPath)
 
   const lines = input.split('\n')
   const result = lines.reduce((accumulator, line) => {
@@ -43,7 +43,7 @@ const digitOrDigitWordToDigit = (digitOrDigitWord: Digit | DigitWord): Digit => 
 }
 
 const partTwo = async (): Promise<number> => {
-  const input = await getInput()
+  const input = await getInput(inputPath)
   const lines = input.split('\n')
   const result = lines.reduce((accumulator, line) => {
     const digitsAndDigitWords: Array<Digit | DigitWord> = []
