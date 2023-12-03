@@ -33,6 +33,32 @@ const partOne = async (): Promise<number> => {
   }, 0)
 }
 
-console.log(await partOne())
+const partTwo = async (): Promise<number> => {
+  const lines = await InputUtils.getInputLines(inputPath)
+  const minimumCubePowers: Array<number> = []
 
-export { partOne }
+  lines.forEach(line => {
+    const minimums = { blue: 0, green: 0, red: 0 }
+    const pullRecordStartingIndex = line.indexOf(':') + 2
+    const pullRecords = line.substring(pullRecordStartingIndex).split(';')
+    pullRecords.forEach(pullRecord => {
+      const colourCountStrings = pullRecord.split(',')
+      colourCountStrings.forEach(colourCountString => {
+        const colourCount = colourCountString.trim().split(' ') as [string, Colour]
+        const count = Number(colourCount[0])
+        const colour = colourCount[1]
+        if (count > minimums[colour]) {
+          minimums[colour] = count
+        }
+      })
+    })
+
+    minimumCubePowers.push(minimums.blue * minimums.green * minimums.red)
+  })
+
+  return minimumCubePowers.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue
+  }, 0)
+}
+
+export { partOne, partTwo }
