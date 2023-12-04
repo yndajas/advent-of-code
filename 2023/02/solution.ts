@@ -1,4 +1,5 @@
 import InputUtils from '../inputUtils'
+import MathUtils from '../mathUtils'
 
 const inputPath = './2023/02/input'
 
@@ -28,9 +29,7 @@ const partOne = async (): Promise<number> => {
     }
   })
 
-  return possibleGameIndices.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue
-  }, 0)
+  return MathUtils.sumNumbers(possibleGameIndices)
 }
 
 const partTwo = async (): Promise<number> => {
@@ -56,9 +55,7 @@ const partTwo = async (): Promise<number> => {
     minimumCubePowers.push(minimums.blue * minimums.green * minimums.red)
   })
 
-  return minimumCubePowers.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue
-  }, 0)
+  return MathUtils.sumNumbers(minimumCubePowers)
 }
 
 export { partOne, partTwo }
