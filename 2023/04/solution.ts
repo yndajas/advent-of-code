@@ -1,12 +1,13 @@
 import InputUtils from '../inputUtils'
+import RegexUtils from '../regexUtils'
 
 const inputPath = './2023/04/input'
 
 const countWinningNumbersYouHave = (line: string): number => {
   const numbersStartingIndex = line.indexOf(':') + 2
   const [winningNumbersString, numbersYouHaveString] = line.substring(numbersStartingIndex).split('|')
-  const winningNumbers = winningNumbersString.match(/[0-9]+/g) as RegExpMatchArray
-  const numbersYouHave = numbersYouHaveString.match(/[0-9]+/g) as RegExpMatchArray
+  const winningNumbers = RegexUtils.getIntegerStrings(winningNumbersString)
+  const numbersYouHave = RegexUtils.getIntegerStrings(numbersYouHaveString)
 
   return numbersYouHave.reduce(
     (winningNumbersYouHaveCountAccumulator, numberYouHave) =>
