@@ -3,15 +3,11 @@ import RegexUtils from '../regexUtils'
 
 const inputPath = './2023/05/input'
 
-type Range = { delta: number; sourceMax: number; sourceMin: number }
-type Map = Array<Range>
+type MapRange = { delta: number; sourceMax: number; sourceMin: number }
+type Map = Array<MapRange>
 
-const partOne = async (): Promise<number> => {
-  const input = await InputUtils.getInput(inputPath)
-  const [seedsString, ...mapStrings] = input.split('\n\n')
-  const seedNumbers = RegexUtils.getIntegers(seedsString)
-
-  const maps: Array<Map> = mapStrings.map(mapString => {
+const getMapsFromMapStrings = (mapStrings: Array<string>, sortMapsByDestinationMin = false): Array<Map> => {
+  return mapStrings.map(mapString => {
     const rangeStrings = mapString.split('\n').slice(1)
 
     return rangeStrings
@@ -23,8 +19,21 @@ const partOne = async (): Promise<number> => {
           sourceMin: sourceRangeStart,
         }
       })
-      .sort((rangeA, rangeB) => rangeA.sourceMin - rangeB.sourceMin)
+      .sort((rangeA, rangeB) => {
+        if (sortMapsByDestinationMin) {
+          return rangeA.sourceMin + rangeA.delta - (rangeB.sourceMin + rangeB.delta)
+        } else {
+          return rangeA.sourceMin - rangeB.sourceMin
+        }
+      })
   })
+}
+
+const partOne = async (): Promise<number> => {
+  const input = await InputUtils.getInput(inputPath)
+  const [seedsString, ...mapStrings] = input.split('\n\n')
+  const maps = getMapsFromMapStrings(mapStrings)
+  const seedNumbers = RegexUtils.getIntegers(seedsString)
 
   return seedNumbers.reduce((accumulator, seedNumber, seedNumberIndex) => {
     let currentNumber = seedNumber
@@ -48,4 +57,58 @@ const partOne = async (): Promise<number> => {
   }, 0)
 }
 
-export { partOne }
+type SeedNumberRange = { end: number; start: number }
+
+const getSeedFromLocationNumber = (
+  maps: Array<Map>,
+  seedNumberRanges: Array<SeedNumberRange>,
+  locationNumber: number,
+): number | undefined => {
+  let currentNumber = locationNumber
+  maps.forEach(map => {
+    map.find(range => {
+      if (currentNumber < range.sourceMin + range.delta) {
+        return true
+      } else if (currentNumber >= range.sourceMin + range.delta && currentNumber <= range.sourceMax + range.delta) {
+        currentNumber -= range.delta
+        return true
+      }
+    })
+  })
+
+  if (
+    seedNumberRanges.find(range => {
+      return currentNumber >= range.start && currentNumber <= range.end
+    })
+  ) {
+    return currentNumber
+  } else {
+    return undefined
+  }
+}
+
+const partTwo = async (): Promise<number> => {
+  const input = await InputUtils.getInput(inputPath)
+  const [seedRangesString, ...mapStrings] = input.split('\n\n')
+  const seedNumberRanges: Array<SeedNumberRange> = (seedRangesString.match(/[0-9]+\s[0-9]+/g) as RegExpMatchArray).map(
+    seedRangeString => {
+      const [start, length] = seedRangeString.split(' ').map(number => Number(number))
+
+      return { end: start + length - 1, start }
+    },
+  )
+  const reversedMaps = getMapsFromMapStrings(mapStrings, true).reverse()
+
+  let seedNumber: number | undefined
+
+  let currentLocationNumber = 0
+
+  while (!seedNumber) {
+    currentLocationNumber++
+    seedNumber = getSeedFromLocationNumber(reversedMaps, seedNumberRanges, currentLocationNumber)
+  }
+
+  return currentLocationNumber
+}
+
+export { partOne, partTwo }
