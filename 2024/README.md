@@ -2,6 +2,10 @@
 
 ## Installation
 
+### Go
+
+Install Go if necessary
+
 ### Rust
 
 Install Rust if necessary
@@ -11,6 +15,10 @@ Install Rust if necessary
 Install Bun if necessary, then run `bun install` from the 2024 directory
 
 ## How to get the answers
+
+### Go
+
+In the Go directory for a given day, run `go run .`
 
 ### Rust
 
@@ -24,6 +32,10 @@ then run the file with `bun run 2024/01/typescript/solution.ts` from the root
 directory or `bun run 01/typescript/solution.ts` from the 2024 directory
 
 ## How to run the tests
+
+### Go
+
+Not implemented
 
 ### Rust
 
