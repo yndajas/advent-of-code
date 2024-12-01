@@ -1,0 +1,10 @@
+{
+	"files": {
+		"ignore": ["2023/**/*"]
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	}
+}
