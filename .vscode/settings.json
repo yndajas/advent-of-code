@@ -4,6 +4,9 @@
     "quickfix.biome": "always",
     "source.organizeImports.biome": "explicit"
   },
+  "rust-analyzer.linkedProjects": [
+    "./2024/01/rust/Cargo.toml"
+  ],
   "[javascript][typescript][json]": {
     "editor.defaultFormatter": "biomejs.biome"
   }
