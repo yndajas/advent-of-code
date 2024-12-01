@@ -1,5 +1,6 @@
 export default class InputUtils {
-  static async getInput(path: string): Promise<string> {
+  static async getInput(zeroPaddedDay: string): Promise<string> {
+    const path = `${import.meta.dir}/${zeroPaddedDay}/input`
     return Bun.file(path).text()
   }
 

@@ -1,7 +1,7 @@
 import InputUtils from '../inputUtils'
 import RegexUtils from '../regexUtils'
 
-const inputPath = './2023/05/input'
+const zeroPaddedDay = '05'
 
 type MapRange = { delta: number; sourceMax: number; sourceMin: number }
 type Map = Array<MapRange>
@@ -30,7 +30,7 @@ const getMapsFromMapStrings = (mapStrings: Array<string>, sortMapsByDestinationM
 }
 
 const partOne = async (): Promise<number> => {
-  const input = await InputUtils.getInput(inputPath)
+  const input = await InputUtils.getInput(zeroPaddedDay)
   const [seedsString, ...mapStrings] = input.split('\n\n')
   const maps = getMapsFromMapStrings(mapStrings)
   const seedNumbers = RegexUtils.getIntegers(seedsString)
@@ -88,7 +88,7 @@ const getSeedFromLocationNumber = (
 }
 
 const partTwo = async (): Promise<number> => {
-  const input = await InputUtils.getInput(inputPath)
+  const input = await InputUtils.getInput(zeroPaddedDay)
   const [seedRangesString, ...mapStrings] = input.split('\n\n')
   const seedNumberRanges: Array<SeedNumberRange> = (seedRangesString.match(/[0-9]+\s[0-9]+/g) as RegExpMatchArray).map(
     seedRangeString => {

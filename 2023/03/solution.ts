@@ -2,7 +2,7 @@ import InputUtils from '../inputUtils'
 import MathUtils from '../mathUtils'
 import RegexUtils from '../regexUtils'
 
-const inputPath = './2023/03/input'
+const zeroPaddedDay = '03'
 
 type Coordinate = { characterIndex: number; lineIndex: number }
 
@@ -31,7 +31,7 @@ const hasSymbolNeighbour = (lines: Array<string>, coordinate: Coordinate): boole
 }
 
 const partOne = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
   const partNumbers: Array<number> = []
   const currentNumberString = {
     adjacentToSymbol: false,
@@ -135,7 +135,7 @@ const getPartNumberFromChildCoordinates = (lines: Array<string>, coordinate: Coo
 }
 
 const partTwo = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
   const gearRatios: Array<number> = []
 
   lines.forEach((line, lineIndex) => {

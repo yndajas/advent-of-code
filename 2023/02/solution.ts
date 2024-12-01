@@ -1,12 +1,12 @@
 import InputUtils from '../inputUtils'
 import MathUtils from '../mathUtils'
 
-const inputPath = './2023/02/input'
+const zeroPaddedDay = '02'
 
 type Colour = 'blue' | 'green' | 'red'
 
 const partOne = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
   const maximums: Record<string, number> = { blue: 14, green: 13, red: 12 }
   const possibleGameIndices: Array<number> = []
 
@@ -33,7 +33,7 @@ const partOne = async (): Promise<number> => {
 }
 
 const partTwo = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
   const minimumCubePowers: Array<number> = []
 
   lines.forEach(line => {

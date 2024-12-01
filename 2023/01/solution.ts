@@ -1,9 +1,9 @@
 import InputUtils from '../inputUtils'
 
-const inputPath = './2023/01/input'
+const zeroPaddedDay = '01'
 
 const partOne = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
   const result = lines.reduce((accumulator, line) => {
     const digits = line.match(/[0-9]/g) as Array<string>
     const number = Number(digits[0] + digits[digits.length - 1])
@@ -41,7 +41,7 @@ const digitOrDigitWordToDigit = (digitOrDigitWord: Digit | DigitWord): Digit => 
 }
 
 const partTwo = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
   const result = lines.reduce((accumulator, line) => {
     const digitsAndDigitWords: Array<Digit | DigitWord> = []
     const regex = /^([0-9]|one|two|three|four|five|six|seven|eight|nine)/

@@ -1,7 +1,7 @@
 import InputUtils from '../inputUtils'
 import RegexUtils from '../regexUtils'
 
-const inputPath = './2023/04/input'
+const zeroPaddedDay = '04'
 
 const countWinningNumbersYouHave = (line: string): number => {
   const numbersStartingIndex = line.indexOf(':') + 2
@@ -19,7 +19,7 @@ const countWinningNumbersYouHave = (line: string): number => {
 }
 
 const partOne = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
 
   return lines.reduce((pointsAccumulator, line) => {
     const winningNumbersYouHaveCount = countWinningNumbersYouHave(line)
@@ -30,7 +30,7 @@ const partOne = async (): Promise<number> => {
 }
 
 const partTwo = async (): Promise<number> => {
-  const lines = await InputUtils.getInputLines(inputPath)
+  const lines = await InputUtils.getInputLines(zeroPaddedDay)
   const lineDetails = lines.map(line => ({
     count: 1,
     winningNumbersYouHave: countWinningNumbersYouHave(line),
