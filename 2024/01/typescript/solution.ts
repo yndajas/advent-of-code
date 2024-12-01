@@ -32,4 +32,55 @@ async function partOne() {
 	);
 }
 
-export { partOne };
+async function partTwoSolutionOne() {
+	const leftSideLocationIdMatchesOnRightSide: Record<LocationId, number> = {};
+	const rightSideLocationIds: Array<LocationId> = [];
+
+	for (const line of lines) {
+		const [leftSideLocationId, rightSideLocationId] = line
+			.split("   ")
+			.map((locationIdString) => Number.parseInt(locationIdString, 10));
+		leftSideLocationIdMatchesOnRightSide[leftSideLocationId] = 0;
+		rightSideLocationIds.push(rightSideLocationId);
+	}
+
+	for (const locationId of rightSideLocationIds) {
+		if (typeof leftSideLocationIdMatchesOnRightSide[locationId] === "number") {
+			leftSideLocationIdMatchesOnRightSide[locationId]++;
+		}
+	}
+
+	return Object.entries(leftSideLocationIdMatchesOnRightSide).reduce(
+		(accumulator, currentMatch) => {
+			const locationId = Number.parseInt(currentMatch[0], 10);
+			const matchesOnRightSide = currentMatch[1];
+			return accumulator + locationId * matchesOnRightSide;
+		},
+		0,
+	);
+}
+
+async function partTwoSolutionTwo() {
+	const leftSideLocationIds: Record<LocationId, boolean> = {};
+	const rightSideLocationIds: Array<LocationId> = [];
+
+	for (const line of lines) {
+		const [leftSideLocationId, rightSideLocationId] = line
+			.split("   ")
+			.map((locationIdString) => Number.parseInt(locationIdString, 10));
+		leftSideLocationIds[leftSideLocationId] = true;
+		rightSideLocationIds.push(rightSideLocationId);
+	}
+
+	let similarityScore = 0;
+
+	for (const locationId of rightSideLocationIds) {
+		if (leftSideLocationIds[locationId]) {
+			similarityScore += locationId;
+		}
+	}
+
+	return similarityScore;
+}
+
+export { partOne, partTwoSolutionOne, partTwoSolutionTwo };
