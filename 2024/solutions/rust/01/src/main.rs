@@ -1,11 +1,12 @@
-use std::fs::read_to_string;
+use std::{collections::HashMap, fs::read_to_string};
 
 fn main() {
     let lines = read_lines("../../../input/01");
-    println!("{}", part_one(lines));
+    println!("{}", part_one(&lines));
+    println!("{}", part_two(&lines));
 }
 
-fn part_one(lines: Vec<String>) -> i32 {
+fn part_one(lines: &Vec<String>) -> i32 {
     let mut left_side_location_ids: Vec<i32> = vec![];
     let mut right_side_location_ids: Vec<i32> = vec![];
 
@@ -35,6 +36,37 @@ fn part_one(lines: Vec<String>) -> i32 {
         .unwrap()
 }
 
+fn part_two(lines: &Vec<String>) -> i32 {
+    let mut left_side_location_ids: HashMap<i32, bool> = HashMap::new();
+    let mut right_side_location_ids: Vec<i32> = vec![];
+
+    lines.iter().for_each(|line| {
+        let location_ids: Vec<i32> = line
+            .split("   ")
+            .map(|location_id| location_id.parse::<i32>().unwrap())
+            .collect();
+        left_side_location_ids.insert(location_ids[0], true);
+        right_side_location_ids.push(location_ids[1]);
+    });
+
+    let mut similarity_score: i32 = 0;
+
+    right_side_location_ids
+        .iter()
+        .for_each(|right_side_location_id| {
+            match left_side_location_ids.get(right_side_location_id) {
+                Some(present) => {
+                    if *present {
+                        similarity_score += right_side_location_id
+                    }
+                }
+                None => (),
+            }
+        });
+
+    similarity_score
+}
+
 // https://doc.rust-lang.org/rust-by-example/std_misc/file/read_lines.html
 fn read_lines(filename: &str) -> Vec<String> {
     read_to_string(filename)
@@ -51,6 +83,12 @@ mod tests {
     #[test]
     fn test_part_one() {
         let lines = read_lines("../../../input/01");
-        assert_eq!(part_one(lines), 1189304);
+        assert_eq!(part_one(&lines), 1189304);
+    }
+
+    #[test]
+    fn test_part_two() {
+        let lines = read_lines("../../../input/01");
+        assert_eq!(part_two(&lines), 24349736);
     }
 }
