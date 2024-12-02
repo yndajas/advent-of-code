@@ -26,4 +26,30 @@ int partOne()
   return diffs.Sum();
 }
 
+int partTwo()
+{
+  Dictionary<int, bool> leftSideLocationIds = [];
+  List<int> rightSideLocationIds = [];
+
+  foreach (var line in lines)
+  {
+    int[] locationIds = Array.ConvertAll(line.Split("   "), int.Parse);
+    leftSideLocationIds.Add(locationIds[0], true);
+    rightSideLocationIds.Add(locationIds[1]);
+  }
+
+  int similarityScore = 0;
+
+  foreach (int locationId in rightSideLocationIds)
+  {
+    if (leftSideLocationIds.GetValueOrDefault(locationId))
+    {
+      similarityScore += locationId;
+    }
+  }
+
+  return similarityScore;
+}
+
 Console.WriteLine(partOne());
+Console.WriteLine(partTwo());
