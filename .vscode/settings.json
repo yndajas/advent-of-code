@@ -6,6 +6,7 @@
   },
   "rust-analyzer.linkedProjects": [
     "./2024/solutions/rust/01/Cargo.toml",
+    "./2024/solutions/rust/02/Cargo.toml",
     "./2024/solutions/rust/utils/Cargo.toml"
   ],
   "[javascript][typescript][json]": {
