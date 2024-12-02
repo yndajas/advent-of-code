@@ -2,6 +2,10 @@
 
 ## Installation
 
+## C#/.NET
+
+Install C#/.NET is necessary (e.g. dotnet-sdk via Homebrew)
+
 ### Go
 
 Install Go if necessary
@@ -15,6 +19,10 @@ Install Rust if necessary
 Install Bun if necessary, then run `bun install` from the 2024 directory
 
 ## How to get the answers
+
+### C#/.NET
+
+In the C# directory for a given day, run `dotnet run`
 
 ### Go
 
@@ -32,6 +40,10 @@ then run the file with `bun run 2024/01/typescript/solution.ts` from the root
 directory or `bun run 01/typescript/solution.ts` from the 2024 directory
 
 ## How to run the tests
+
+### C#/.NET
+
+Not implemented
 
 ### Go
 
