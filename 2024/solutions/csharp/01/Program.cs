@@ -40,11 +40,11 @@ int partTwo()
 
   int similarityScore = 0;
 
-  foreach (int locationId in rightSideLocationIds)
+  foreach (int rightSidelocationId in rightSideLocationIds)
   {
-    if (leftSideLocationIds.GetValueOrDefault(locationId))
+    if (leftSideLocationIds.GetValueOrDefault(rightSidelocationId))
     {
-      similarityScore += locationId;
+      similarityScore += rightSidelocationId;
     }
   }
 

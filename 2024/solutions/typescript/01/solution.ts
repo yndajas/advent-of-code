@@ -74,9 +74,9 @@ async function partTwoSolutionTwo() {
 
 	let similarityScore = 0;
 
-	for (const locationId of rightSideLocationIds) {
-		if (leftSideLocationIds[locationId]) {
-			similarityScore += locationId;
+	for (const rightSidelocationId of rightSideLocationIds) {
+		if (leftSideLocationIds[rightSidelocationId]) {
+			similarityScore += rightSidelocationId;
 		}
 	}
 
