@@ -17,6 +17,7 @@ func main() {
 	lines := strings.Split(string(text), "\n")
 
 	fmt.Println(partOne(lines))
+	fmt.Println(partTwo(lines))
 }
 
 func partOne(lines []string) int {
@@ -56,4 +57,33 @@ func partOne(lines []string) int {
 	}
 
 	return totalDiff
+}
+
+func partTwo(lines []string) int {
+	var leftSideLocationIds = make(map[int]bool)
+	var rightSideLocationIds = make([]int, len(lines))
+
+	for index, line := range lines {
+		locationIdStrings := strings.Split(line, "   ")
+		leftSideLocationId, err := strconv.Atoi(locationIdStrings[0])
+		if err != nil {
+			fmt.Printf("Error converting left side of line %d to integer", index)
+		}
+		leftSideLocationIds[leftSideLocationId] = true
+		rightSideLocationId, err := strconv.Atoi(locationIdStrings[1])
+		if err != nil {
+			fmt.Printf("Error converting right side of line %d to integer", index)
+		}
+		rightSideLocationIds[index] = rightSideLocationId
+	}
+
+	similarityScore := 0
+
+	for _, rightleftSideLocationId := range rightSideLocationIds {
+		if leftSideLocationIds[rightleftSideLocationId] {
+			similarityScore += rightleftSideLocationId
+		}
+	}
+
+	return similarityScore
 }
