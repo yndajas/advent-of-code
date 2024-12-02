@@ -1,7 +1,7 @@
 use std::fs::read_to_string;
 
 fn main() {
-    let lines = read_lines("../input");
+    let lines = read_lines("../../../input/01");
     println!("{}", part_one(lines));
 }
 
@@ -50,7 +50,7 @@ mod tests {
 
     #[test]
     fn test_part_one() {
-        let lines = read_lines("../input");
+        let lines = read_lines("../../../input/01");
         assert_eq!(part_one(lines), 1189304);
     }
 }

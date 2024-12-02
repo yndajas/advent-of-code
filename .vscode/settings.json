@@ -5,7 +5,7 @@
     "source.organizeImports.biome": "explicit"
   },
   "rust-analyzer.linkedProjects": [
-    "./2024/01/rust/Cargo.toml"
+    "./2024/solutions/rust/01/Cargo.toml"
   ],
   "[javascript][typescript][json]": {
     "editor.defaultFormatter": "biomejs.biome"

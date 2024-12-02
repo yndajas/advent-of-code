@@ -1,4 +1,4 @@
-﻿var lines = File.ReadLines("../input");
+﻿var lines = File.ReadLines("../../../input/01");
 
 int partOne()
 {

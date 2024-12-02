@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	text, err := os.ReadFile("../input")
+	text, err := os.ReadFile("../../../input/01")
 	if err != nil {
 		fmt.Println("Error reading input file")
 	}

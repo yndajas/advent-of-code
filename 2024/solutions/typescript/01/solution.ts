@@ -1,6 +1,6 @@
-const lines = (await Bun.file(`${import.meta.dir}/../input`).text()).split(
-	"\n",
-);
+const lines = (
+	await Bun.file(`${import.meta.dir}/../../../input/01`).text()
+).split("\n");
 
 type LocationId = number;
 
@@ -82,5 +82,9 @@ async function partTwoSolutionTwo() {
 
 	return similarityScore;
 }
+
+console.log(await partOne());
+console.log(await partTwoSolutionOne());
+console.log(await partTwoSolutionTwo());
 
 export { partOne, partTwoSolutionOne, partTwoSolutionTwo };
