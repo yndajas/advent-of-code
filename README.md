@@ -6,7 +6,7 @@ My solutions to [Advent of Code](https://adventofcode.com) puzzles
 
 | Year       | Stars (n/50) | Languages                           |
 | ---------- | ------------ | ----------------------------------- |
-| **2024\*** | 4            | C#/.NET<br>Go<br>Rust<br>TypeScript |
+| **2024\*** | 5            | C#/.NET<br>Go<br>Rust<br>TypeScript |
 | 2023       | 10           | TypeScript                          |
 | 2022       | 1            | Ruby                                |
 
