@@ -71,7 +71,7 @@ function originalAndSubArrays(originalArray: number[]) {
 	return arrays;
 }
 
-console.log(await partOne());
-console.log(await partTwo());
+console.log(partOne());
+console.log(partTwo());
 
 export { partOne, partTwo };

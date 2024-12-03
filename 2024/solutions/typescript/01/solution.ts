@@ -4,7 +4,7 @@ const lines = (
 
 type LocationId = number;
 
-async function partOne() {
+function partOne() {
 	const leftSideLocationIds: Array<LocationId> = [];
 	const rightSideLocationIds: Array<LocationId> = [];
 
@@ -32,7 +32,7 @@ async function partOne() {
 	);
 }
 
-async function partTwoSolutionOne() {
+function partTwoSolutionOne() {
 	const leftSideLocationIdMatchesOnRightSide: Record<LocationId, number> = {};
 	const rightSideLocationIds: Array<LocationId> = [];
 
@@ -60,7 +60,7 @@ async function partTwoSolutionOne() {
 	);
 }
 
-async function partTwoSolutionTwo() {
+function partTwoSolutionTwo() {
 	const leftSideLocationIds: Record<LocationId, boolean> = {};
 	const rightSideLocationIds: Array<LocationId> = [];
 
@@ -83,8 +83,8 @@ async function partTwoSolutionTwo() {
 	return similarityScore;
 }
 
-console.log(await partOne());
-console.log(await partTwoSolutionOne());
-console.log(await partTwoSolutionTwo());
+console.log(partOne());
+console.log(partTwoSolutionOne());
+console.log(partTwoSolutionTwo());
 
 export { partOne, partTwoSolutionOne, partTwoSolutionTwo };
