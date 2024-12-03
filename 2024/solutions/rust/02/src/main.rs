@@ -75,18 +75,18 @@ fn part_one_solution_one(lines: &Vec<String>) -> i16 {
 }
 
 fn part_one_solution_two(lines: &Vec<String>) -> i16 {
-    let mut safe_reports: i16 = 0;
+    let mut safe_report_count: i16 = 0;
 
-    for (_, report) in lines.iter().enumerate() {
-        let numbers: Vec<i8> = numbers_from_delimited_string(report, " ");
+    for report in lines {
+        let levels: Vec<i8> = numbers_from_delimited_string(report, " ");
 
-        match unsafe_jump_index(&numbers) {
+        match unsafe_jump_index(&levels) {
             Some(_) => continue,
-            None => safe_reports += 1,
+            None => safe_report_count += 1,
         }
     }
 
-    return safe_reports;
+    return safe_report_count;
 }
 
 fn part_two(lines: &Vec<String>) -> i16 {
@@ -107,26 +107,26 @@ fn part_two(lines: &Vec<String>) -> i16 {
     safe_report_count
 }
 
-fn unsafe_jump_index(numbers: &Vec<i8>) -> Option<usize> {
-    let increasing = numbers[0] < numbers[1];
+fn unsafe_jump_index(levels: &Vec<i8>) -> Option<usize> {
+    let increasing = levels[0] < levels[1];
 
-    for (current_number_index, current_number) in numbers.iter().enumerate() {
-        if current_number_index == 0 {
+    for (current_level_index, current_level) in levels.iter().enumerate() {
+        if current_level_index == 0 {
             continue;
         }
 
-        let last_number = numbers[current_number_index - 1];
+        let last_level = levels[current_level_index - 1];
         let progress: i8;
 
         if increasing {
-            progress = current_number - last_number;
+            progress = current_level - last_level;
         } else {
-            progress = last_number - current_number;
+            progress = last_level - current_level;
         }
 
         match progress {
             1..=3 => continue,
-            _ => return Some(current_number_index),
+            _ => return Some(current_level_index),
         }
     }
 
