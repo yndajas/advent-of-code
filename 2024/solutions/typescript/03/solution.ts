@@ -1,7 +1,17 @@
-const text = await Bun.file(`${import.meta.dir}/../../../input/03`).text();
+const singleLineText = (
+	await Bun.file(`${import.meta.dir}/../../../input/03`).text()
+).replaceAll("\n", "");
 
 function partOne() {
-	const regex = /mul\((\d{1,3}),(\d{1,3})\)/gm;
+	return multiplyAndSum(singleLineText);
+}
+
+function partTwo() {
+	return multiplyAndSum(textWithDontSectionsStripped(singleLineText));
+}
+
+function multiplyAndSum(text: string) {
+	const regex = /mul\((\d{1,3}),(\d{1,3})\)/g;
 	const matches = text.matchAll(regex);
 	let total = 0;
 	for (const match of matches) {
@@ -10,6 +20,11 @@ function partOne() {
 	return total;
 }
 
-console.log(partOne());
+function textWithDontSectionsStripped(text: string) {
+	return text.replaceAll(/don't\(\).*?(?:do\(\)|$)/g, "");
+}
 
-export { partOne };
+console.log(partOne());
+console.log(partTwo());
+
+export { partOne, partTwo };
