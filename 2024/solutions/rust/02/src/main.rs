@@ -4,6 +4,7 @@ fn main() {
     let lines = read_lines("../../../input/02");
     println!("{}", part_one_solution_one(&lines));
     println!("{}", part_one_solution_two(&lines));
+    println!("{}", part_two(&lines));
 }
 
 fn part_one_solution_one(lines: &Vec<String>) -> i16 {
@@ -88,6 +89,24 @@ fn part_one_solution_two(lines: &Vec<String>) -> i16 {
     return safe_reports;
 }
 
+fn part_two(lines: &Vec<String>) -> i16 {
+    let mut safe_report_count: i16 = 0;
+
+    for report in lines {
+        let levels_vector: Vec<i8> = numbers_from_delimited_string(report, " ");
+        let levels_vector_and_sub_vectors = original_vector_and_sub_vectors(&levels_vector);
+
+        if levels_vector_and_sub_vectors
+            .iter()
+            .any(|vector| unsafe_jump_index(vector).is_none())
+        {
+            safe_report_count += 1;
+        }
+    }
+
+    safe_report_count
+}
+
 fn unsafe_jump_index(numbers: &Vec<i8>) -> Option<usize> {
     let increasing = numbers[0] < numbers[1];
 
@@ -114,6 +133,18 @@ fn unsafe_jump_index(numbers: &Vec<i8>) -> Option<usize> {
     return None;
 }
 
+fn original_vector_and_sub_vectors(original_vector: &Vec<i8>) -> Vec<Vec<i8>> {
+    let mut vectors = vec![original_vector.clone()];
+
+    for (index, _) in original_vector.iter().enumerate() {
+        let mut sub_vector = original_vector.clone();
+        sub_vector.remove(index);
+        vectors.push(sub_vector);
+    }
+
+    vectors
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -128,5 +159,11 @@ mod tests {
     fn test_part_one_solution_two() {
         let lines = read_lines("../../../input/02");
         assert_eq!(part_one_solution_two(&lines), 220);
+    }
+
+    #[test]
+    fn test_part_two() {
+        let lines = read_lines("../../../input/02");
+        assert_eq!(part_two(&lines), 296);
     }
 }
