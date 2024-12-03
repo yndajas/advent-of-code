@@ -17,3 +17,7 @@ File.readlines(filename).each do |line|
 end
 
 puts calories_by_elf.max
+# 69281
+
+puts calories_by_elf.sort.reverse.first(3).reduce(:+)
+# 201524
