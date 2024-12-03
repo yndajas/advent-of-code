@@ -78,38 +78,40 @@ fn part_one_solution_two(lines: &Vec<String>) -> i16 {
 
     for (_, report) in lines.iter().enumerate() {
         let numbers: Vec<i8> = numbers_from_delimited_string(report, " ");
-        let increasing = numbers[0] < numbers[1];
-        let mut safe = true;
 
-        for (current_number_index, current_number) in numbers.iter().enumerate() {
-            if current_number_index == 0 {
-                continue;
-            }
-
-            let last_number = numbers[current_number_index - 1];
-            let progress: i8;
-
-            if increasing {
-                progress = current_number - last_number;
-            } else {
-                progress = last_number - current_number;
-            }
-
-            match progress {
-                1..=3 => continue,
-                _ => {
-                    safe = false;
-                    break;
-                }
-            }
-        }
-
-        if safe {
-            safe_reports += 1;
+        match unsafe_jump_index(&numbers) {
+            Some(_) => continue,
+            None => safe_reports += 1,
         }
     }
 
     return safe_reports;
+}
+
+fn unsafe_jump_index(numbers: &Vec<i8>) -> Option<usize> {
+    let increasing = numbers[0] < numbers[1];
+
+    for (current_number_index, current_number) in numbers.iter().enumerate() {
+        if current_number_index == 0 {
+            continue;
+        }
+
+        let last_number = numbers[current_number_index - 1];
+        let progress: i8;
+
+        if increasing {
+            progress = current_number - last_number;
+        } else {
+            progress = last_number - current_number;
+        }
+
+        match progress {
+            1..=3 => continue,
+            _ => return Some(current_number_index),
+        }
+    }
+
+    return None;
 }
 
 #[cfg(test)]
