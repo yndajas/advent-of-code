@@ -21,7 +21,57 @@ function partOne() {
 	return totalMatchCount;
 }
 
+function partTwo() {
+	let crossedMasesCount = 0;
+
+	for (
+		let currentRowIndex = 1;
+		currentRowIndex <= maxRowIndex - 1;
+		currentRowIndex++
+	) {
+		for (
+			let currentColumnIndex = 1;
+			currentColumnIndex <= maxColumnIndex - 1;
+			currentColumnIndex++
+		) {
+			const currentCharacter = lines[currentRowIndex][currentColumnIndex];
+			if (currentCharacter !== "A") {
+				continue;
+			}
+
+			const topLeftCharacter =
+				lines[currentRowIndex - 1][currentColumnIndex - 1];
+			const bottomRightCharacter =
+				lines[currentRowIndex + 1][currentColumnIndex + 1];
+
+			if (
+				!(
+					(topLeftCharacter === "M" && bottomRightCharacter === "S") ||
+					(topLeftCharacter === "S" && bottomRightCharacter === "M")
+				)
+			) {
+				continue;
+			}
+
+			const topRightCharacter =
+				lines[currentRowIndex + 1][currentColumnIndex - 1];
+			const bottomLeftCharacter =
+				lines[currentRowIndex - 1][currentColumnIndex + 1];
+
+			if (
+				(topRightCharacter === "M" && bottomLeftCharacter === "S") ||
+				(topRightCharacter === "S" && bottomLeftCharacter === "M")
+			) {
+				crossedMasesCount += 1;
+			}
+		}
+	}
+
+	return crossedMasesCount;
+}
+
 console.log(partOne());
+console.log(partTwo());
 
 function rowsToColumns(rows: string[]) {
 	const columns: string[] = [];
@@ -103,4 +153,4 @@ function downLeftDiagonalLineFromCell(
 	return string;
 }
 
-export { partOne };
+export { partOne, partTwo };
