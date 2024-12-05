@@ -40,7 +40,7 @@ function partOne() {
 		);
 }
 
-function partTwo() {
+function partTwoSolutionOne() {
 	return updates
 		.map((update): number | undefined => {
 			const numbers = update
@@ -50,6 +50,31 @@ function partTwo() {
 			if (!isCorrectlyOrdered(numbers)) {
 				const middleIndex = Math.floor(numbers.length / 2);
 				return fixOrder(numbers)[middleIndex];
+			}
+		})
+		.filter(
+			(middleNumberFromCorrectlyOrderedUpdateOrUndefined) =>
+				middleNumberFromCorrectlyOrderedUpdateOrUndefined,
+		)
+		.reduce(
+			(accumulator, currentMiddleNumber) => accumulator + currentMiddleNumber,
+			0,
+		);
+}
+
+function partTwoSolutionTwo() {
+	return updates
+		.map((update): number | undefined => {
+			const numbers = update
+				.split(",")
+				.map((numberString) => Number.parseInt(numberString, 10));
+
+			if (!isCorrectlyOrdered(numbers)) {
+				numbers.sort((a, b) =>
+					precedingNumbersByNumber[a].includes(b) ? 1 : -1,
+				);
+				const middleIndex = Math.floor(numbers.length / 2);
+				return numbers[middleIndex];
 			}
 		})
 		.filter(
@@ -100,6 +125,7 @@ function fixOrder(numbers: number[]) {
 }
 
 console.log(partOne());
-console.log(partTwo());
+console.log(partTwoSolutionOne());
+console.log(partTwoSolutionTwo());
 
-export { partOne, partTwo };
+export { partOne, partTwoSolutionOne, partTwoSolutionTwo };

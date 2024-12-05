@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 
-import { partOne, partTwo } from "./solution";
+import { partOne, partTwoSolutionOne, partTwoSolutionTwo } from "./solution";
 
 describe("2024 day 5", () => {
 	describe("part 1", () => {
@@ -9,9 +9,15 @@ describe("2024 day 5", () => {
 		});
 	});
 
-	describe("part 2", () => {
+	describe("part 2 solution 1", () => {
 		it("returns 6204", async () => {
-			expect(partTwo()).toEqual(6204);
+			expect(partTwoSolutionOne()).toEqual(6204);
+		});
+	});
+
+	describe("part 2 solution 2", () => {
+		it("returns 6204", async () => {
+			expect(partTwoSolutionTwo()).toEqual(6204);
 		});
 	});
 });
