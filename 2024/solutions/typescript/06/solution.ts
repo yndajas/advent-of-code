@@ -2,15 +2,10 @@ const lines = (
 	await Bun.file(`${import.meta.dir}/../../../input/06`).text()
 ).split("\n");
 
-type ObstacleMap = boolean[][];
-
 type Coordinate = {
 	x: number;
 	y: number;
 };
-
-// {"12.13": true} where guard visits coordinate { x: 12, y: 13 }
-type VisitedCoordinates = Record<string, boolean>;
 
 enum Orientation {
 	up = 0,
@@ -19,20 +14,26 @@ enum Orientation {
 	left = 3,
 }
 
+type ObstacleMap = boolean[][];
+
+type EmptyPositions = Coordinate[];
+
+type VisitedCoordinateWithOrientation = Record<Orientation, boolean>;
+
 type Guard = {
 	exited: boolean;
+	looped: boolean;
 	position: Coordinate;
 	orientation: Orientation;
+	// {"12.13": [1]} where guard visits coordinate { x: 12, y: 13 } with right orientation
+	visitedCoordinates: Record<string, VisitedCoordinateWithOrientation>;
 };
 
-function partOne() {
-	const guard: Guard = {
-		orientation: 0,
-		position: { x: 0, y: 0 },
-		exited: false,
-	};
+function setup(): [Coordinate, ObstacleMap, EmptyPositions] {
+	let startingPosition = { x: 0, y: 0 };
 
 	const obstacleMap: ObstacleMap = [];
+	const emptyPositions: EmptyPositions = [];
 
 	lines.forEach((row, y) => {
 		row.split("").forEach((cell, x) => {
@@ -43,50 +44,100 @@ function partOne() {
 			switch (cell) {
 				case ".":
 					obstacleMap[x][y] = false;
+					emptyPositions.push({ x, y });
 					break;
 				case "#":
 					obstacleMap[x][y] = true;
 					break;
 				case "^":
 					obstacleMap[x][y] = false;
-					guard.position = { x, y };
+					startingPosition = { x, y };
 					break;
 			}
 		});
 	});
 
-	const visitedCoordinates: VisitedCoordinates = {
-		[coordinateToString(guard.position)]: true,
-	};
-
-	while (!guard.exited) {
-		move(guard, obstacleMap, visitedCoordinates);
-	}
-
-	return Object.keys(visitedCoordinates).length;
+	return [startingPosition, obstacleMap, emptyPositions];
 }
 
-console.log(partOne());
+function partOne() {
+	const [startingPosition, obstacleMap] = setup();
+
+	const guard = newGuard(startingPosition);
+
+	while (!guard.exited) {
+		move(guard, obstacleMap);
+	}
+
+	return Object.keys(guard.visitedCoordinates).length;
+}
+
+function partTwo() {
+	const [startingPosition, obstacleMap, emptyPositions] = setup();
+
+	const newObstacleMaps: ObstacleMap[] = [];
+
+	for (const emptyPosition of emptyPositions) {
+		const newObstacleMap = JSON.parse(JSON.stringify(obstacleMap));
+		newObstacleMap[emptyPosition.x][emptyPosition.y] = true;
+		newObstacleMaps.push(newObstacleMap);
+	}
+
+	let mapsThatCauseLoopCount = 0;
+
+	for (const newObstacleMap of newObstacleMaps) {
+		const guard = newGuard(startingPosition);
+
+		while (!guard.exited && !guard.looped) {
+			move(guard, newObstacleMap);
+		}
+
+		if (guard.looped) {
+			mapsThatCauseLoopCount++;
+		}
+	}
+
+	return mapsThatCauseLoopCount;
+}
+
+// console.log(partOne());
+// console.log(partTwo());
+
+function newGuard(startingPosition: Coordinate): Guard {
+	const guard = {
+		exited: false,
+		looped: false,
+		position: startingPosition,
+		orientation: 0,
+		visitedCoordinates: {},
+	};
+
+	guard.visitedCoordinates[coordinateToString(startingPosition)] = { 0: true };
+
+	return guard;
+}
 
 function coordinateToString(coordinate: Coordinate) {
 	return `${coordinate.x}.${coordinate.y}`;
 }
 
-function move(
-	guard: Guard,
-	obstacleMap: ObstacleMap,
-	visitedCoordinates: VisitedCoordinates,
-) {
+function move(guard: Guard, obstacleMap: ObstacleMap) {
 	const possibleNextCoordinate = nextCoordinate(guard);
 
 	if (outOfBounds(possibleNextCoordinate, obstacleMap)) {
 		guard.exited = true;
+	} else if (hasLooped(guard, possibleNextCoordinate)) {
+		guard.looped = true;
 	} else if (hasObstacle(possibleNextCoordinate, obstacleMap)) {
 		rotateClockwise(guard);
-		move(guard, obstacleMap, visitedCoordinates);
+		move(guard, obstacleMap);
 	} else {
 		guard.position = possibleNextCoordinate;
-		visitedCoordinates[coordinateToString(possibleNextCoordinate)] = true;
+		const coordinateString = coordinateToString(possibleNextCoordinate);
+		guard.visitedCoordinates[coordinateString] = {
+			...guard.visitedCoordinates[coordinateString],
+			[guard.orientation]: true,
+		};
 	}
 }
 
@@ -104,7 +155,7 @@ function nextCoordinate(guard): Coordinate {
 }
 
 function outOfBounds(coordinate: Coordinate, obstacleMap: ObstacleMap) {
-	if (obstacleMap[coordinate.x][coordinate.y] === undefined) {
+	if (obstacleMap[coordinate.x]?.[coordinate.y] === undefined) {
 		return true;
 	}
 
@@ -123,4 +174,10 @@ function rotateClockwise(guard: Guard) {
 	}
 }
 
-export { partOne };
+function hasLooped(guard: Guard, nextCoordinate: Coordinate) {
+	return guard.visitedCoordinates[coordinateToString(nextCoordinate)]?.[
+		guard.orientation
+	];
+}
+
+export { partOne, partTwo };
