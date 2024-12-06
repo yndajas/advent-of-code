@@ -16,8 +16,6 @@ enum Orientation {
 
 type ObstacleMap = boolean[][];
 
-type EmptyPositions = Coordinate[];
-
 type VisitedCoordinateWithOrientation = Record<Orientation, boolean>;
 
 type Guard = {
@@ -29,11 +27,9 @@ type Guard = {
 	visitedCoordinates: Record<string, VisitedCoordinateWithOrientation>;
 };
 
-function setup(): [Coordinate, ObstacleMap, EmptyPositions] {
-	let startingPosition = { x: 0, y: 0 };
-
+function setup(): [ObstacleMap, Coordinate] {
 	const obstacleMap: ObstacleMap = [];
-	const emptyPositions: EmptyPositions = [];
+	let startingPosition = { x: 0, y: 0 };
 
 	lines.forEach((row, y) => {
 		row.split("").forEach((cell, x) => {
@@ -44,7 +40,6 @@ function setup(): [Coordinate, ObstacleMap, EmptyPositions] {
 			switch (cell) {
 				case ".":
 					obstacleMap[x][y] = false;
-					emptyPositions.push({ x, y });
 					break;
 				case "#":
 					obstacleMap[x][y] = true;
@@ -57,29 +52,28 @@ function setup(): [Coordinate, ObstacleMap, EmptyPositions] {
 		});
 	});
 
-	return [startingPosition, obstacleMap, emptyPositions];
+	return [obstacleMap, startingPosition];
 }
 
 function partOne() {
-	const [startingPosition, obstacleMap] = setup();
+	const [obstacleMap, startingPosition] = setup();
 
-	const guard = newGuard(startingPosition);
-
-	while (!guard.exited) {
-		move(guard, obstacleMap);
-	}
-
-	return Object.keys(guard.visitedCoordinates).length;
+	return visitedCoordinates(obstacleMap, startingPosition).length;
 }
 
 function partTwo() {
-	const [startingPosition, obstacleMap, emptyPositions] = setup();
+	const [originalObstacleMap, startingPosition] = setup();
+
+	const newObstacleOptions = visitedCoordinates(
+		originalObstacleMap,
+		startingPosition,
+	).slice(1);
 
 	const newObstacleMaps: ObstacleMap[] = [];
 
-	for (const emptyPosition of emptyPositions) {
-		const newObstacleMap = JSON.parse(JSON.stringify(obstacleMap));
-		newObstacleMap[emptyPosition.x][emptyPosition.y] = true;
+	for (const newObstacleOption of newObstacleOptions) {
+		const newObstacleMap = JSON.parse(JSON.stringify(originalObstacleMap));
+		newObstacleMap[newObstacleOption.x][newObstacleOption.y] = true;
 		newObstacleMaps.push(newObstacleMap);
 	}
 
@@ -119,6 +113,13 @@ function newGuard(startingPosition: Coordinate): Guard {
 
 function coordinateToString(coordinate: Coordinate) {
 	return `${coordinate.x}.${coordinate.y}`;
+}
+
+function stringToCoordinate(string: string): Coordinate {
+	const [x, y] = string
+		.split(".")
+		.map((xOrYString) => Number.parseInt(xOrYString, 10));
+	return { x, y };
 }
 
 function move(guard: Guard, obstacleMap: ObstacleMap) {
@@ -172,6 +173,19 @@ function rotateClockwise(guard: Guard) {
 	} else {
 		guard.orientation++;
 	}
+}
+
+function visitedCoordinates(
+	obstacleMap: ObstacleMap,
+	startingPosition: Coordinate,
+) {
+	const guard = newGuard(startingPosition);
+
+	while (!guard.exited) {
+		move(guard, obstacleMap);
+	}
+
+	return Object.keys(guard.visitedCoordinates).map(stringToCoordinate);
 }
 
 function hasLooped(guard: Guard, nextCoordinate: Coordinate) {
