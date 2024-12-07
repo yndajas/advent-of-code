@@ -17,6 +17,24 @@ int partOne()
   return safeReportCount;
 }
 
+int partTwo()
+{
+  int safeReportCount = 0;
+
+  foreach (string report in lines)
+  {
+    int[] levelsArray = Array.ConvertAll(report.Split(" "), int.Parse);
+    int[][] levelsArrayAndSubArrays = originalAndSubArrays(levelsArray);
+
+    if (levelsArrayAndSubArrays.Any(array => unsafeJumpIndex(array) == null))
+    {
+      safeReportCount++;
+    }
+  }
+
+  return safeReportCount;
+}
+
 int? unsafeJumpIndex(int[] levels)
 {
   bool increasing = levels[0] < levels[1];
@@ -45,4 +63,19 @@ int? unsafeJumpIndex(int[] levels)
   return null;
 }
 
+int[][] originalAndSubArrays(int[] originalArray)
+{
+  int[][] arrays = [originalArray];
+
+  for (int originalArrayIndex = 0; originalArrayIndex < originalArray.Length; originalArrayIndex++)
+  {
+    int[] subArray = (int[])originalArray.Clone();
+    subArray = subArray.Where((_, subArrayIndex) => subArrayIndex != originalArrayIndex).ToArray();
+    arrays = [.. arrays, subArray];
+  }
+
+  return arrays;
+}
+
 Console.WriteLine(partOne());
+Console.WriteLine(partTwo());
