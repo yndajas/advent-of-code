@@ -76,6 +76,10 @@ function operatorsAndOperandsGeneratesResult(
 ) {
 	let permutationResult = operands[0];
 	operators.forEach((operator, operatorIndex) => {
+		if (permutationResult > targetResult) {
+			return false;
+		}
+
 		const nextOperand = operands[operatorIndex + 1];
 
 		switch (operator) {
