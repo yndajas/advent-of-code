@@ -24,7 +24,7 @@ function partOne() {
 	);
 }
 
-// console.log(partOne());
+console.log(partOne());
 
 function resultAndOperandsFromLine(line: string): [number, number[]] {
 	const [resultArray, operands] = line
@@ -66,10 +66,16 @@ function operatorsAndOperandsGeneratesResult(
 ) {
 	let permutationResult = operands[0];
 	operators.forEach((operator, operatorIndex) => {
-		// biome-ignore lint/security/noGlobalEval: this is a script being used with a fixed, trusted input
-		permutationResult = eval(
-			`${permutationResult} ${operator} ${operands[operatorIndex + 1]}`,
-		);
+		const nextOperand = operands[operatorIndex + 1];
+
+		switch (operator) {
+			case "+":
+				permutationResult += nextOperand;
+				break;
+			case "*":
+				permutationResult *= nextOperand;
+				break;
+		}
 	});
 
 	return permutationResult === targetResult;
