@@ -35,6 +35,9 @@ int partTwo()
   return safeReportCount;
 }
 
+Console.WriteLine(partOne());
+Console.WriteLine(partTwo());
+
 int? unsafeJumpIndex(int[] levels)
 {
   bool increasing = levels[0] < levels[1];
@@ -76,6 +79,3 @@ int[][] originalAndSubArrays(int[] originalArray)
 
   return arrays;
 }
-
-Console.WriteLine(partOne());
-Console.WriteLine(partTwo());
