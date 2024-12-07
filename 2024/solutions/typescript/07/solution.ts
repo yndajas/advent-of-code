@@ -2,15 +2,27 @@ const lines = (
 	await Bun.file(`${import.meta.dir}/../../../input/07`).text()
 ).split("\n");
 
-type Operator = "+" | "*";
+type ConcatenateOperator = "||";
+type Operator = "+" | "*" | ConcatenateOperator;
 
 function partOne() {
+	return sumResultsOfValidLines(["+", "*"]);
+}
+
+function partTwo() {
+	return sumResultsOfValidLines(["+", "*", "||"]);
+}
+
+// console.log(partOne());
+// console.log(partTwo());
+
+function sumResultsOfValidLines(operators: Operator[]) {
 	const validLines = lines.filter((line) => {
 		const [targetResult, operands] = resultAndOperandsFromLine(line);
 
 		return anyWithPermutations(
 			operands.length - 1,
-			["+", "*"],
+			operators,
 			[],
 			(operators) =>
 				operatorsAndOperandsGeneratesResult(operands, operators, targetResult),
@@ -23,8 +35,6 @@ function partOne() {
 		0,
 	);
 }
-
-console.log(partOne());
 
 function resultAndOperandsFromLine(line: string): [number, number[]] {
 	const [resultArray, operands] = line
@@ -75,10 +85,16 @@ function operatorsAndOperandsGeneratesResult(
 			case "*":
 				permutationResult *= nextOperand;
 				break;
+			case "||":
+				permutationResult = Number.parseInt(
+					permutationResult.toString() + nextOperand.toString(),
+					10,
+				);
+				break;
 		}
 	});
 
 	return permutationResult === targetResult;
 }
 
-export { partOne };
+export { partOne, partTwo };
