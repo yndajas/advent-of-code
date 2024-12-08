@@ -1,13 +1,12 @@
-const lines = (
+const rows = (
 	await Bun.file(`${import.meta.dir}/../../../input/04`).text()
 ).split("\n");
-const maxRowIndex = lines.length - 1;
-const maxColumnIndex = lines[0].length - 1;
+const maxRowIndex = rows.length - 1;
+const maxColumnIndex = rows[0].length - 1;
 
 function partOne() {
-	const rows = lines;
-	const columns = rowsToColumns(lines);
-	const diagonalLines = rowsToDiagonalLines(lines);
+	const columns = rowsToColumns(rows);
+	const diagonalLines = rowsToDiagonalLines(rows);
 	const allLines = [...rows, ...columns, ...diagonalLines];
 	const regex = /(?=(?:XMAS|SAMX))/g;
 
@@ -34,15 +33,15 @@ function partTwo() {
 			currentColumnIndex <= maxColumnIndex - 1;
 			currentColumnIndex++
 		) {
-			const currentCharacter = lines[currentRowIndex][currentColumnIndex];
+			const currentCharacter = rows[currentRowIndex][currentColumnIndex];
 			if (currentCharacter !== "A") {
 				continue;
 			}
 
 			const topLeftCharacter =
-				lines[currentRowIndex - 1][currentColumnIndex - 1];
+				rows[currentRowIndex - 1][currentColumnIndex - 1];
 			const bottomRightCharacter =
-				lines[currentRowIndex + 1][currentColumnIndex + 1];
+				rows[currentRowIndex + 1][currentColumnIndex + 1];
 
 			if (
 				!(
@@ -54,9 +53,9 @@ function partTwo() {
 			}
 
 			const topRightCharacter =
-				lines[currentRowIndex + 1][currentColumnIndex - 1];
+				rows[currentRowIndex + 1][currentColumnIndex - 1];
 			const bottomLeftCharacter =
-				lines[currentRowIndex - 1][currentColumnIndex + 1];
+				rows[currentRowIndex - 1][currentColumnIndex + 1];
 
 			if (
 				(topRightCharacter === "M" && bottomLeftCharacter === "S") ||
@@ -128,7 +127,7 @@ function downRightDiagonalLineFromCell(
 		currentRowIndex <= maxRowIndex &&
 		currentColumnIndex <= maxColumnIndex
 	) {
-		string += lines[currentRowIndex][currentColumnIndex];
+		string += rows[currentRowIndex][currentColumnIndex];
 		currentRowIndex++;
 		currentColumnIndex++;
 	}
@@ -145,7 +144,7 @@ function downLeftDiagonalLineFromCell(
 	let string = "";
 
 	while (currentRowIndex <= maxRowIndex && currentColumnIndex >= 0) {
-		string += lines[currentRowIndex][currentColumnIndex];
+		string += rows[currentRowIndex][currentColumnIndex];
 		currentRowIndex++;
 		currentColumnIndex--;
 	}
