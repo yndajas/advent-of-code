@@ -7,25 +7,9 @@ const maxY = rows.length - 1;
 type Coordinate = { x: number; y: number };
 
 function partOne() {
-	const antennaLocationsByFrequency: Record<string, Coordinate[]> = {};
-
-	rows.forEach((row, rowIndex) => {
-		row.split("").forEach((frequency, columnIndex) => {
-			if (frequency === ".") {
-				return;
-			}
-
-			const coordinate = { x: columnIndex, y: rowIndex };
-
-			antennaLocationsByFrequency[frequency] = (
-				antennaLocationsByFrequency[frequency] || []
-			).concat(coordinate);
-		});
-	});
-
 	const antinodeCoordinateStrings: Set<string> = new Set();
 
-	for (const coordinates of Object.values(antennaLocationsByFrequency)) {
+	for (const coordinates of Object.values(antennaLocationsByFrequency(rows))) {
 		coordinates.forEach((currentCoordinate, currentCoordinateIndex) => {
 			for (const laterCoordinate of coordinates.slice(
 				currentCoordinateIndex + 1,
@@ -63,7 +47,83 @@ function partOne() {
 	return Array.from(antinodeCoordinateStrings).length;
 }
 
+function partTwo() {
+	const antinodeCoordinateStrings: Set<string> = new Set();
+
+	for (const coordinates of Object.values(antennaLocationsByFrequency(rows))) {
+		if (coordinates.length < 2) {
+			continue;
+		}
+
+		coordinates.forEach((currentCoordinate, currentCoordinateIndex) => {
+			antinodeCoordinateStrings.add(coordinateToString(currentCoordinate));
+
+			for (const laterCoordinate of coordinates.slice(
+				currentCoordinateIndex + 1,
+			)) {
+				const diff = {
+					x: laterCoordinate.x - currentCoordinate.x,
+					y: laterCoordinate.y - currentCoordinate.y,
+				};
+
+				let earlierAntinodeCandidateCoordinate = earlierAntinodeCandidate(
+					currentCoordinate,
+					diff,
+				);
+
+				while (inBounds(earlierAntinodeCandidateCoordinate)) {
+					antinodeCoordinateStrings.add(
+						coordinateToString(earlierAntinodeCandidateCoordinate),
+					);
+					earlierAntinodeCandidateCoordinate = earlierAntinodeCandidate(
+						earlierAntinodeCandidateCoordinate,
+						diff,
+					);
+				}
+
+				let laterAntinodeCandidateCoordinate = laterAntinodeCandidate(
+					laterCoordinate,
+					diff,
+				);
+
+				while (inBounds(laterAntinodeCandidateCoordinate)) {
+					antinodeCoordinateStrings.add(
+						coordinateToString(laterAntinodeCandidateCoordinate),
+					);
+					laterAntinodeCandidateCoordinate = laterAntinodeCandidate(
+						laterAntinodeCandidateCoordinate,
+						diff,
+					);
+				}
+			}
+		});
+	}
+
+	return Array.from(antinodeCoordinateStrings).length;
+}
+
 console.log(partOne());
+console.log(partTwo());
+
+function antennaLocationsByFrequency(rows: string[]) {
+	const antennaLocationsByFrequency: Record<string, Coordinate[]> = {};
+
+	rows.forEach((row, rowIndex) => {
+		row.split("").forEach((frequency, columnIndex) => {
+			if (frequency === ".") {
+				return;
+			}
+
+			const coordinate = { x: columnIndex, y: rowIndex };
+
+			antennaLocationsByFrequency[frequency] = (
+				antennaLocationsByFrequency[frequency] || []
+			).concat(coordinate);
+		});
+	});
+
+	return antennaLocationsByFrequency;
+}
 
 function earlierAntinodeCandidate(
 	earlierCoordinate: Coordinate,
@@ -95,4 +155,4 @@ function coordinateToString(coordinate: Coordinate) {
 	return `${coordinate.x}.${coordinate.y}`;
 }
 
-export { partOne };
+export { partOne, partTwo };
