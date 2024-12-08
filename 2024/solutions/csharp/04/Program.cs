@@ -22,7 +22,50 @@ int partOne()
   return totalMatchCount;
 }
 
+int partTwo()
+{
+  int crossedMasesCount = 0;
+
+  for (int currentRowIndex = 1; currentRowIndex <= maxRowIndex - 1; currentRowIndex++)
+  {
+    for (int currentColumnIndex = 1; currentColumnIndex <= maxColumnIndex - 1; currentColumnIndex++)
+    {
+      char currentCharacter = rows[currentRowIndex][currentColumnIndex];
+
+      if (currentCharacter != 'A')
+      {
+        continue;
+      }
+
+      char topLeftCharacter = rows[currentRowIndex - 1][currentColumnIndex - 1];
+      char bottomRightCharacter = rows[currentRowIndex + 1][currentColumnIndex + 1];
+
+      if (!(
+        (topLeftCharacter == 'M' && bottomRightCharacter == 'S') ||
+        (topLeftCharacter == 'S' && bottomRightCharacter == 'M')
+      ))
+      {
+        continue;
+      }
+
+      char topRightCharacter = rows[currentRowIndex - 1][currentColumnIndex + 1];
+      char bottomLeftCharacter = rows[currentRowIndex + 1][currentColumnIndex - 1];
+
+      if ((
+        (topRightCharacter == 'M' && bottomLeftCharacter == 'S') ||
+        (topRightCharacter == 'S' && bottomLeftCharacter == 'M')
+      ))
+      {
+        crossedMasesCount++;
+      }
+    }
+  }
+
+  return crossedMasesCount;
+}
+
 Console.WriteLine(partOne());
+Console.WriteLine(partTwo());
 
 string[] rowsToColumns(string[] rows)
 {
