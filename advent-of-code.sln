@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03", "2024\solutions\csharp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04", "2024\solutions\csharp\04\04.csproj", "{11A3870D-FFEE-4492-A2A6-7EC8A4BDB03C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "2024\solutions\csharp\tests\tests.csproj", "{E0470334-143E-415F-9DE4-6B3EF5446748}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{11A3870D-FFEE-4492-A2A6-7EC8A4BDB03C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11A3870D-FFEE-4492-A2A6-7EC8A4BDB03C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11A3870D-FFEE-4492-A2A6-7EC8A4BDB03C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0470334-143E-415F-9DE4-6B3EF5446748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0470334-143E-415F-9DE4-6B3EF5446748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0470334-143E-415F-9DE4-6B3EF5446748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0470334-143E-415F-9DE4-6B3EF5446748}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{9A7D2CEB-53A6-4133-9DD7-9C3A19A8C8A9} = {47E6615C-4DDF-4234-9C35-65ECAC1A44D3}
 		{B65617E2-A17C-40F9-BB85-7B85171B17C2} = {47E6615C-4DDF-4234-9C35-65ECAC1A44D3}
 		{11A3870D-FFEE-4492-A2A6-7EC8A4BDB03C} = {47E6615C-4DDF-4234-9C35-65ECAC1A44D3}
+		{E0470334-143E-415F-9DE4-6B3EF5446748} = {47E6615C-4DDF-4234-9C35-65ECAC1A44D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55D62DC4-6F52-4DEA-A940-5FA2F2614B7D}
