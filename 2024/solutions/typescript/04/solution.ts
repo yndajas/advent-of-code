@@ -53,15 +53,15 @@ function partTwo() {
 			}
 
 			const topRightCharacter =
-				rows[currentRowIndex + 1][currentColumnIndex - 1];
-			const bottomLeftCharacter =
 				rows[currentRowIndex - 1][currentColumnIndex + 1];
+			const bottomLeftCharacter =
+				rows[currentRowIndex + 1][currentColumnIndex - 1];
 
 			if (
 				(topRightCharacter === "M" && bottomLeftCharacter === "S") ||
 				(topRightCharacter === "S" && bottomLeftCharacter === "M")
 			) {
-				crossedMasesCount += 1;
+				crossedMasesCount++;
 			}
 		}
 	}
