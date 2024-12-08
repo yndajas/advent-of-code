@@ -2,7 +2,9 @@
 
 ## Installation
 
-Install C#/.NET if necessary (e.g. dotnet-sdk via Homebrew)
+1. Install C#/.NET if necessary (e.g. dotnet-sdk via Homebrew)
+2. Run `dotnet tool install` or `dotnet tool restore` in repo root \[STEP NEEDS
+   VERIFYING - this is to install CSharpier\]
 
 ## Creating an app/script for a new day
 
