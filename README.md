@@ -16,7 +16,7 @@ each year
 | 2024 (ongoing) | 18    |
 | 2023           | 10    |
 | 2022           | 2     |
-| 2015           | 2     |
+| 2015           | 4     |
 
 ### Parts solved by language by year
 
@@ -25,7 +25,7 @@ award extra stars
 
 | Language   | 2024 (ongoing) | 2023 | 2022 | 2015 | Total  |
 | ---------- | -------------- | ---- | ---- | ---- | ------ |
-| TypeScript | 18             | 10   | 0    | 2    | **30** |
+| TypeScript | 18             | 10   | 0    | 4    | **32** |
 | C#         | 8              | 0    | 0    |      | **8**  |
 | Go         | 4              | 0    | 0    |      | **4**  |
 | Rust       | 4              | 0    | 0    |      | **4**  |
