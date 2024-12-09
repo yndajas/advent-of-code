@@ -27,12 +27,11 @@ function download_prompt() {
 
   TARGET_FILEPATH=$SCRIPT_FOLDER/../$YEAR/prompts/$ZERO_PADDED_DAY.html
 
-  curl -sS $BASE_URL -H $AOC_COOKIE | pup -p -i 0 --pre article > $TARGET_FILEPATH
-
-  sed -i "" "1i\\
-<a href=\"$BASE_URL\">Open on web</a>\\
-\\
-" $TARGET_FILEPATH
+  echo "<pre>" > $TARGET_FILEPATH
+  cat $SCRIPT_FOLDER/../art/$ZERO_PADDED_DAY >> $TARGET_FILEPATH
+  echo "</pre>" >> $TARGET_FILEPATH
+  echo "<a href=\"$BASE_URL\">Open on web</a>" >> $TARGET_FILEPATH
+  curl -sS $BASE_URL -H $AOC_COOKIE | pup -p -i 0 --pre article >> $TARGET_FILEPATH
 }
 
 function download_input() {
