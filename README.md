@@ -16,19 +16,20 @@ each year
 | 2024 (ongoing) | 18    |
 | 2023           | 10    |
 | 2022           | 2     |
+| 2015           | 2     |
 
 ### Parts solved by language by year
 
 Starting in 2024, I've solved some parts in multiple languages. This doesn't
 award extra stars
 
-| Language   | 2024 (ongoing) | 2023 | 2022 | Total  |
-| ---------- | -------------- | ---- | ---- | ------ |
-| TypeScript | 18             | 10   | 0    | **28** |
-| C#         | 8              | 0    | 0    | **8**  |
-| Go         | 4              | 0    | 0    | **4**  |
-| Rust       | 4              | 0    | 0    | **4**  |
-| Ruby       | 0              | 0    | 2    | **2**  |
+| Language   | 2024 (ongoing) | 2023 | 2022 | 2015 | Total  |
+| ---------- | -------------- | ---- | ---- | ---- | ------ |
+| TypeScript | 18             | 10   | 0    | 2    | **30** |
+| C#         | 8              | 0    | 0    |      | **8**  |
+| Go         | 4              | 0    | 0    |      | **4**  |
+| Rust       | 4              | 0    | 0    |      | **4**  |
+| Ruby       | 0              | 0    | 2    |      | **2**  |
 
 ## Getting the prompt and input
 
