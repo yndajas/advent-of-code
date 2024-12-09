@@ -29,3 +29,10 @@ award extra stars
 | Go         | 4              | 0    | 0    | **4**  |
 | Rust       | 4              | 0    | 0    | **4**  |
 | Ruby       | 0              | 0    | 2    | **2**  |
+
+## Getting the prompt and input
+
+These are available at
+<https://adventofcode.com/THE_YEAR/day/THE_DAY_WITHOUT_ZERO_PADDING>. To get
+them locally, run the script `script/start.zsh` (or `script/download.zsh`) with
+the year and day
