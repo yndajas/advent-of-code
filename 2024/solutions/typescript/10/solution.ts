@@ -15,11 +15,11 @@ type CoordinateOrMovement = { x: number; y: number };
 
 type Map = number[][];
 
-function partOne() {
-	const map: Map = rows.map((row) =>
-		row.split("").map((cellString) => Number.parseInt(cellString, 10)),
-	);
+const map: Map = rows.map((row) =>
+	row.split("").map((cellString) => Number.parseInt(cellString, 10)),
+);
 
+function partOne() {
 	let totalTrailheadScores = 0;
 
 	map.forEach((row, y) => {
@@ -32,7 +32,21 @@ function partOne() {
 	return totalTrailheadScores;
 }
 
+function partTwo() {
+	let totalTrailheadScores = 0;
+
+	map.forEach((row, y) => {
+		for (const xString in row) {
+			const x = Number.parseInt(xString, 10);
+			totalTrailheadScores += validPathCount(map, { x, y }, 0);
+		}
+	});
+
+	return totalTrailheadScores;
+}
+
 console.log(partOne());
+console.log(partTwo());
 
 function findReachablePeaks(
 	map: Map,
@@ -59,6 +73,30 @@ function findReachablePeaks(
 	return reachablePeaks;
 }
 
+function validPathCount(
+	map: Map,
+	startingPoint: CoordinateOrMovement,
+	validElevation = 0,
+) {
+	// console.log(startingPoint);
+	const elevation = map[startingPoint.y][startingPoint.x];
+
+	if (elevation !== validElevation) return 0;
+	if (elevation === 9) return 1;
+
+	let trailheadScore = 0;
+
+	for (const movement of cardinalMovements) {
+		const nextPoint = move(startingPoint, movement);
+
+		if (nextPoint) {
+			trailheadScore += validPathCount(map, nextPoint, validElevation + 1);
+		}
+	}
+
+	return trailheadScore;
+}
+
 function move(
 	startingPoint: CoordinateOrMovement,
 	movement: CoordinateOrMovement,
@@ -79,4 +117,4 @@ function coordinateToString(coordinate: CoordinateOrMovement) {
 	return `${coordinate.x}.${coordinate.y}`;
 }
 
-export { partOne };
+export { partOne, partTwo };
