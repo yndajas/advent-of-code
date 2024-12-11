@@ -4,7 +4,7 @@ import { partOne, partTwo } from "./solution";
 
 describe("2024 day 11", () => {
 	describe("part 1", () => {
-		it("returns 199986", async () => {
+		it("returns 199986", () => {
 			expect(partOne()).toEqual(199986);
 		});
 	});
