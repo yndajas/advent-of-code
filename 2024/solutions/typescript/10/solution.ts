@@ -78,7 +78,6 @@ function validPathCount(
 	startingPoint: CoordinateOrMovement,
 	validElevation = 0,
 ) {
-	// console.log(startingPoint);
 	const elevation = map[startingPoint.y][startingPoint.x];
 
 	if (elevation !== validElevation) return 0;
