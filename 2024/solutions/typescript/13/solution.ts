@@ -6,12 +6,24 @@ type Button = CoordinateOrMovement & { cost: number };
 function partOne() {
 	const machines = parseMachines();
 	return machines.reduce(
-		(accumulator, machine) => accumulator + machine.cheapestOption(),
+		(accumulator, machine) => accumulator + machine.cheapestOptionPartOne(),
 		0,
 	);
 }
 
+function partOneWithDivision() {
+	const machines = parseMachines();
+	let totalCost = 0;
+
+	for (const machine of machines) {
+		totalCost += machine.cheapestOptionWithDivision();
+	}
+
+	return totalCost;
+}
+
 console.log(partOne());
+console.log(partOneWithDivision());
 
 function parseMachines() {
 	return input.split("\n\n").map((machineString) => {
@@ -48,7 +60,7 @@ class Machine {
 		this.target = { x: targetX, y: targetY };
 	}
 
-	cheapestOption() {
+	cheapestOptionPartOne() {
 		let cost = 0;
 		let aCount = 0;
 
@@ -67,7 +79,7 @@ class Machine {
 					break;
 				}
 
-				if (current.x > this.target.x || current.y > this.target.y) {
+				if (this.overTarget(current)) {
 					break;
 				}
 
@@ -81,6 +93,41 @@ class Machine {
 
 		return cost;
 	}
+
+	cheapestOptionWithDivision() {
+		const maxAX = Math.floor(this.target.x / this.a.x);
+		const maxAY = Math.floor(this.target.y / this.a.y);
+		const maxA = Math.min(maxAX, maxAY);
+
+		let aCount = maxA;
+		let cost = 0;
+
+		while (!cost && aCount >= 0) {
+			const remainder = {
+				x: this.target.x - this.a.x * aCount,
+				y: this.target.y - this.a.y * aCount,
+			};
+
+			const bsNeededX = remainder.x / this.b.x;
+			const bsNeededY = remainder.y / this.b.y;
+
+			if (
+				bsNeededX === bsNeededY &&
+				bsNeededX % 1 === 0 &&
+				bsNeededY % 1 === 0
+			) {
+				cost = aCount * this.a.cost + bsNeededX * this.b.cost;
+			} else {
+				aCount--;
+			}
+		}
+
+		return cost;
+	}
+
+	overTarget(current: { x: number; y: number }) {
+		return current.x > this.target.x || current.y > this.target.y;
+	}
 }
 
-export { partOne };
+export { partOne, partOneWithDivision };
