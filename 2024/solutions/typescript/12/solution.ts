@@ -36,8 +36,8 @@ function partTwo() {
 	);
 }
 
-console.log(partOne());
-console.log(partTwo());
+// console.log(partOne());
+// console.log(partTwo());
 
 function getRegions() {
 	const regions: Region[] = [];
@@ -259,4 +259,5 @@ function contiguousGroupCount(ascendingIntegers: number[]) {
 	return groupCount;
 }
 
-export { partOne, partTwo };
+export type { CoordinateOrMovement };
+export { cardinalMovements, map, maxX, maxY, move, partOne, partTwo };
