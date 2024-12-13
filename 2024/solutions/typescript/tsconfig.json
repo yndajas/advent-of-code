@@ -12,7 +12,7 @@
     // "lib": ["dom", "esnext"],
     "module": "esnext",
     // "moduleDetection": "force",
-    // "moduleResolution": "bundler",
+    "moduleResolution": "bundler",
     // "noEmit": true,
     // "noImplicitAny": true,
     // "outDir": "./dist",
