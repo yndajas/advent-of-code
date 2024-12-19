@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { partOne } from "./solution";
+import { partOne, partTwo } from "./solution";
 
 describe("2024 day 17", () => {
 	describe("part 1", () => {
@@ -14,7 +14,7 @@ describe("2024 day 17", () => {
 
 				const result = partOne(unparsedRegisters, unparsedProgram);
 
-				expect(result.registers.b).toEqual(1);
+				expect(result.registers.b).toEqual(1n);
 			});
 		});
 
@@ -38,7 +38,7 @@ describe("2024 day 17", () => {
 
 				const result = partOne(unparsedRegisters, unparsedProgram);
 
-				expect(result.registers.a).toEqual(0);
+				expect(result.registers.a).toEqual(0n);
 				expect(result.output).toEqual("4,2,5,6,7,7,7,7,3,1,0");
 			});
 		});
@@ -51,7 +51,7 @@ describe("2024 day 17", () => {
 
 				const result = partOne(unparsedRegisters, unparsedProgram);
 
-				expect(result.registers.b).toEqual(26);
+				expect(result.registers.b).toEqual(26n);
 			});
 		});
 
@@ -63,7 +63,7 @@ describe("2024 day 17", () => {
 
 				const result = partOne(unparsedRegisters, unparsedProgram);
 
-				expect(result.registers.b).toEqual(44354);
+				expect(result.registers.b).toEqual(44354n);
 			});
 		});
 
@@ -76,6 +76,22 @@ describe("2024 day 17", () => {
 				const result = partOne(unparsedRegisters, unparsedProgram);
 
 				expect(result.output).toEqual("4,6,3,5,6,3,5,2,1,0");
+			});
+		});
+	});
+
+	describe("part 2", () => {
+		it("returns 164278496489149n", () => {
+			expect(partTwo()).toEqual(164278496489149n);
+		});
+
+		describe("when A is 2024 with program 0,3,5,4,3,0", () => {
+			it("returns 117440n", () => {
+				const unparsedRegisters =
+					"Register A: 2024\nRegister B: 0\nRegister C: 0";
+				const unparsedProgram = "Program: 0,3,5,4,3,0";
+
+				expect(partTwo(unparsedRegisters, unparsedProgram)).toEqual(117440n);
 			});
 		});
 	});
