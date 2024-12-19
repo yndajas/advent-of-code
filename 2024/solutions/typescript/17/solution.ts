@@ -6,7 +6,7 @@ type Operator = number;
 type Operand = number;
 type Instruction = [Operator, Operand];
 type Program = Instruction[];
-type Registers = { a: number; b: number; c: number };
+type Registers = { a: bigint; b: bigint; c: bigint };
 
 function partOne(
 	unparsedRegisters = defaultUnparsedRegisters,
@@ -33,7 +33,54 @@ function partOne(
 	return { registers, output: outputArray.join(",") };
 }
 
-// console.log(partOne());
+function partTwo(
+	unparsedRegisters = defaultUnparsedRegisters,
+	unparsedProgram = defaultUnparsedProgram,
+	a: bigint = BigInt(0),
+	targetMatchLength = 1,
+) {
+	const registers = parseRegisters(unparsedRegisters);
+	registers.a = a;
+	const program = parseProgram(unparsedProgram);
+	let instructionPointer = 0;
+	const outputArray: number[] = [];
+
+	while (true) {
+		const instruction = instructionAt(program, instructionPointer);
+
+		if (!instruction) break;
+
+		instructionPointer = performOperation(
+			instruction,
+			registers,
+			outputArray,
+			instructionPointer,
+		);
+	}
+
+	if (outputMatchesFullProgram(outputArray, program)) {
+		return a;
+	}
+
+	if (outputMatchesEndOfProgram(targetMatchLength, outputArray, program)) {
+		return partTwo(
+			unparsedRegisters,
+			unparsedProgram,
+			a * BigInt(8),
+			targetMatchLength + 1,
+		);
+	}
+
+	return partTwo(
+		unparsedRegisters,
+		unparsedProgram,
+		a + BigInt(1),
+		targetMatchLength,
+	);
+}
+
+// console.log(partOne().output);
+// console.log(partTwo());
 
 function parseProgram(unparsedProgram: string): Program {
 	return unparsedProgram
@@ -51,7 +98,7 @@ function parseProgram(unparsedProgram: string): Program {
 function parseRegisters(unparsedRegisters: string): Registers {
 	const [a, b, c] = unparsedRegisters
 		.split("\n")
-		.map((registerString) => Number(registerString.match(/\d+/)));
+		.map((registerString) => BigInt(registerString.match(/\d+/)[0]));
 
 	return { a, b, c };
 }
@@ -99,7 +146,7 @@ function bst(
 	_outputArray: number[],
 	_currentPointer: number,
 ) {
-	registers.b = comboOperand(operand, registers) % 8;
+	registers.b = comboOperand(operand, registers) % BigInt(8);
 }
 
 function bxc(
@@ -117,7 +164,7 @@ function bxl(
 	_outputArray: number[],
 	_currentPointer: number,
 ) {
-	registers.b = registers.b ^ operand;
+	registers.b = registers.b ^ BigInt(operand);
 }
 
 function cdv(
@@ -135,7 +182,7 @@ function jnz(
 	_outputArray: number[],
 	currentPointer: number,
 ) {
-	return registers.a === 0 ? currentPointer + 2 : operand;
+	return registers.a === BigInt(0) ? currentPointer + 2 : operand;
 }
 
 function out(
@@ -144,23 +191,48 @@ function out(
 	outputArray: number[],
 	_currentPointer: number,
 ) {
-	outputArray.push(comboOperand(operand, registers) % 8);
+	outputArray.push(Number(comboOperand(operand, registers) % BigInt(8)));
 }
 
 function dv(operand: Operand, registers: Registers) {
-	return Math.floor(registers.a / 2 ** comboOperand(operand, registers));
+	return BigInt(registers.a / BigInt(2) ** comboOperand(operand, registers));
 }
 
 function comboOperand(operand: Operand, registers: Registers) {
+	if (operand < 4) {
+		return BigInt(operand);
+	}
+
 	return {
-		0: 0,
-		1: 1,
-		2: 2,
-		3: 3,
 		4: registers.a,
 		5: registers.b,
 		6: registers.c,
 	}[operand];
 }
 
-export { partOne };
+function outputMatchesFullProgram(outputArray: number[], program: Program) {
+	const outputString = outputArray.join("");
+	const programString = program
+		.map((instruction) => instruction.join(""))
+		.join("");
+
+	return outputString === programString;
+}
+
+function outputMatchesEndOfProgram(
+	lastNItems: number,
+	outputArray: number[],
+	program: Program,
+) {
+	const outputString = outputArray
+		.join("")
+		.slice(outputArray.length - lastNItems);
+	const programString = program
+		.map((instruction) => instruction.join(""))
+		.join("")
+		.slice(program.length * 2 - lastNItems);
+
+	return outputString === programString;
+}
+
+export { partOne, partTwo };
