@@ -28,8 +28,19 @@ function partOne(rowAndColumnCount = 71, fallenByteCount = 1024) {
 	);
 }
 
-console.log(partOne());
+function partTwo(rowAndColumnCount = 71, maxFallenByteCount = 3450) {
+	for (let fallenByteCount = maxFallenByteCount; ; fallenByteCount--) {
+		if (partOne(rowAndColumnCount, fallenByteCount)) {
+			return coordinateToString(byteFallCoordinates[fallenByteCount]);
+		}
+	}
+}
+
+// console.log(partOne());
 // console.log(partOne(7, 12));
+
+// console.log(partTwo());
+// console.log(partTwo(7, 25));
 
 function generateMap(rowAndColumnCount: number) {
 	const map: MapArray = [];
@@ -197,4 +208,4 @@ function printMap(map: MapArray) {
 	console.log(mapString);
 }
 
-export { partOne };
+export { partOne, partTwo };
