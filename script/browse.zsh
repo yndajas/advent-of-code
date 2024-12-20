@@ -25,8 +25,8 @@ cat $PROMPT_FILEPATH \
   | npx html-minifier --collapse-whitespace --remove-tag-whitespace \
   | pandoc --from=html --to=markdown_strict+backtick_code_blocks --lua-filter=$SCRIPT_FOLDER/code_block.lua --wrap=none \
   | sed 's/\ \([.,:;!?)]\)/\1/g' \
-  | sed 's/\([(]\) \([`*]\)/\1\2/g' \
-  | sed 's/\([`*]\) \([)]\)/\1\2/g' \
+  | sed 's/( \([`*]\)/(\1/g' \
+  | sed 's/\([`*]\) )/\1)/g' \
   | sed 's/\([^ ][-]\) \([`*]\)/\1\2/g' \
   | sed 's/\([`*]\) \([-][^ ]\)/\1\2/g' \
   | glow -p -s $SCRIPT_FOLDER/glow.json
