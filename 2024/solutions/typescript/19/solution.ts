@@ -9,7 +9,15 @@ function partOne() {
 	return designs.filter((design) => possible(design)).length;
 }
 
+function partTwo() {
+	return designs.reduce(
+		(accumulator, design) => accumulator + validCombinationCount(design),
+		0,
+	);
+}
+
 console.log(partOne());
+console.log(partTwo());
 
 function possible(design: string, impossibleDesigns: Set<string> = new Set()) {
 	if (impossibleDesigns.has(design)) return false;
@@ -27,4 +35,31 @@ function possible(design: string, impossibleDesigns: Set<string> = new Set()) {
 	return false;
 }
 
-export { partOne };
+function validCombinationCount(
+	design: string,
+	combinationCountByDesign: Record<string, number> = {},
+): number {
+	if (combinationCountByDesign[design] !== undefined)
+		return combinationCountByDesign[design];
+
+	return patterns.reduce((accumulator, pattern) => {
+		if (design.startsWith(pattern)) {
+			if (design.length === pattern.length) {
+				combinationCountByDesign[design] = accumulator + 1;
+			} else {
+				combinationCountByDesign[design] =
+					accumulator +
+					validCombinationCount(
+						design.slice(pattern.length),
+						combinationCountByDesign,
+					);
+			}
+
+			return combinationCountByDesign[design];
+		}
+
+		return accumulator;
+	}, 0);
+}
+
+export { partOne, partTwo };
