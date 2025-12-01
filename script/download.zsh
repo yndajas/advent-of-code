@@ -19,8 +19,11 @@ else
 fi
 
 SCRIPT_FOLDER=$(dirname $0)
+YEAR_FOLDER=$SCRIPT_FOLDER/../$YEAR
 BASE_URL=https://adventofcode.com/$YEAR/day/$DAY
 AOC_COOKIE="cookie: $(cookies https://adventofcode.com)"
+
+mkdir -p $YEAR_FOLDER/input $YEAR_FOLDER/prompts
 
 function download_prompt() {
   echo "Downloading prompt..."
