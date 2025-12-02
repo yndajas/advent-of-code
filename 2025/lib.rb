@@ -27,9 +27,9 @@ def test(description, actual:, expected: nil)
   puts output
 end
 
-def benchmark(description, times: [1, 10, 100], &block)
+def benchmark(description: '', times: [1, 10, 100], &block)
   times.each do |count|
-    puts "#{description} x #{count}"
-    puts Benchmark.measure { count.times { block.call } }
+    puts "#{description} x #{count}".strip
+    puts(Benchmark.measure { count.times { block.call } })
   end
 end
