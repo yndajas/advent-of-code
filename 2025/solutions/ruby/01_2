@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require_relative "../../lib"
+require_relative '../../lib'
 
 def solve_with_maths(input)
   hits = 0
@@ -9,14 +10,14 @@ def solve_with_maths(input)
     direction = rotation[0]
     clicks = rotation[1..].to_i
     movement = clicks
-    movement *= -1 if direction == "L"
+    movement *= -1 if direction == 'L'
 
-    if clicks % 100 == 0
+    if (clicks % 100).zero?
       hits += clicks / 100
     else
       hits += (clicks / 100.0).floor
 
-      if position > 0
+      if position.positive?
         delta = movement.abs % 100
         delta *= -1 if movement.negative?
         hits += 1 unless position + delta in 1..99
@@ -33,18 +34,18 @@ def solve_with_brute_force(input)
   position = 50
   hits = 0
 
-  input.each_with_index do |rotation, index|
+  input.each_with_index do |rotation, _index|
     direction = rotation[0]
     clicks = rotation[1..].to_i
 
     clicks.times do
-      position += 1 if direction == "R"
-      position -= 1 if direction == "L"
+      position += 1 if direction == 'R'
+      position -= 1 if direction == 'L'
 
-      position = 99 if position < 0
+      position = 99 if position.negative?
       position = 0 if position > 99
 
-      hits += 1 if position == 0
+      hits += 1 if position.zero?
     end
   end
 
@@ -53,8 +54,8 @@ end
 
 alias solve solve_with_maths
 
-test("example", expected: 6, actual: solve(get_input("01_example")))
-test("real", expected: 6858, actual: solve(get_input("01")))
+test('example', expected: 6, actual: solve(get_input('01_example')))
+test('real', expected: 6858, actual: solve(get_input('01')))
 
 # benchmark("maths") { solve_with_maths(get_input("01")) }
 # benchmark("brute") { solve_with_brute_force(get_input("01")) }

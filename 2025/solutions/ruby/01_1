@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require_relative "../../lib"
+require_relative '../../lib'
 
 def solve(input)
   positions = [50]
@@ -11,8 +12,8 @@ def solve(input)
     positions.push((positions.last + movement) % 100)
   end
 
-  positions.select { _1 == 0 }.count
+  positions.select(&:zero?).count
 end
 
-test("example", expected: 3, actual: solve(get_input("01_example")))
-test("real", expected: 1191, actual: solve(get_input("01")))
+test('example', expected: 3, actual: solve(get_input('01_example')))
+test('real', expected: 1191, actual: solve(get_input('01')))
