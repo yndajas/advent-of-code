@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../../lib'
+
+def chunk_sizes(length)
+  (1..(length.to_f / 2).floor).to_a.select do |chunk_size|
+    ((length.to_f / chunk_size) % 1).zero?
+  end
+end
+
+def invalid_ids(lower, upper)
+  chunk_sizes(lower.length).flat_map do |chunk_size|
+    lower_left = lower[..(chunk_size - 1)].to_i
+    upper_left = upper[..(chunk_size - 1)].to_i
+    repetitions = lower.length / chunk_size
+
+    (lower_left..upper_left).to_a.map do |chunk|
+      id = (chunk.to_s * repetitions).to_i
+      id if id.between?(lower.to_i, upper.to_i)
+    end
+  end.compact
+end
+
+def solve(input)
+  ranges = input.first.split(',')
+
+  ranges.flat_map do |range|
+    lower, upper = range.split('-')
+    lower = '10' if lower.length == 1
+
+    if lower.length == upper.length
+      invalid_ids(lower, upper)
+    else
+      [
+        invalid_ids(lower, '9' * lower.length),
+        invalid_ids("1#{'0' * (upper.length - 1)}", upper),
+      ].flatten
+    end
+  end.uniq.sum
+end
+
+test('example', expected: 4_174_379_265, actual: solve(get_input('02_example')))
+test('real', expected: 46_666_175_279, actual: solve(get_input('02')))
+
+benchmark { solve(get_input('02')) }
