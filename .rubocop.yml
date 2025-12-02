@@ -1,0 +1,18 @@
+AllCops:
+  NewCops: enable
+
+Layout/CaseIndentation:
+  EnforcedStyle: end
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: variable
+
+Layout/LineLength:
+  Max: 80
+
+Metrics/MethodLength:
+  Max: 20
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+
+Style/HashSyntax:
+  EnforcedShorthandSyntax: always
