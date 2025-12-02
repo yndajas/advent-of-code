@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require_relative "../../lib"
+
+def solve(input)
+  positions = [50]
+
+  input.each do |rotation|
+    movement = rotation[1..].to_i % 100
+    movement *= -1 if rotation[0] == 'L'
+    positions.push((positions.last + movement) % 100)
+  end
+
+  positions.select { _1 == 0 }.count
+end
+
+test("example", expected: 3, actual: solve(get_input("01_example")))
+test("real", expected: 1191, actual: solve(get_input("01")))
