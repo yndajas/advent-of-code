@@ -14,8 +14,7 @@ Metrics/AbcSize:
   Enabled: false
 
 Metrics/MethodLength:
-  Max: 20
-  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  Enabled: false
 
 Style/HashSyntax:
   EnforcedShorthandSyntax: always
