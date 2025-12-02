@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+
+require_relative "../../lib"
+
+def solve_with_maths(input)
+  hits = 0
+
+  input.inject(50) do |position, rotation|
+    direction = rotation[0]
+    clicks = rotation[1..].to_i
+    movement = clicks
+    movement *= -1 if direction == "L"
+
+    if clicks % 100 == 0
+      hits += clicks / 100
+    else
+      hits += (clicks / 100.0).floor
+
+      if position > 0
+        delta = movement.abs % 100
+        delta *= -1 if movement.negative?
+        hits += 1 unless position + delta in 1..99
+      end
+    end
+
+    (position + movement) % 100
+  end
+
+  hits
+end
+
+def solve_with_brute_force(input)
+  position = 50
+  hits = 0
+
+  input.each_with_index do |rotation, index|
+    direction = rotation[0]
+    clicks = rotation[1..].to_i
+
+    clicks.times do
+      position += 1 if direction == "R"
+      position -= 1 if direction == "L"
+
+      position = 99 if position < 0
+      position = 0 if position > 99
+
+      hits += 1 if position == 0
+    end
+  end
+
+  hits
+end
+
+alias solve solve_with_maths
+
+test("example", expected: 6, actual: solve(get_input("01_example")))
+test("real", expected: 6858, actual: solve(get_input("01")))
+
+# benchmark("maths") { solve_with_maths(get_input("01")) }
+# benchmark("brute") { solve_with_brute_force(get_input("01")) }
