@@ -4,6 +4,8 @@
 # $ PATH/TO/SCRIPT 2024 3
 # $ PATH/TO/SCRIPT 2024 12
 
+source .env
+
 if [ ! "$#" = 2 ]; then
   echo "Wrong number of arguments.\n\nUsage:\n$ PATH/TO/SCRIPT YEAR DAY\n\nExample from project root:\n$ script/download.zsh 2024 8"
   return
@@ -21,7 +23,7 @@ fi
 SCRIPT_FOLDER=$(dirname $0)
 YEAR_FOLDER=$SCRIPT_FOLDER/../$YEAR
 BASE_URL=https://adventofcode.com/$YEAR/day/$DAY
-AOC_COOKIE="cookie: $(cookies https://adventofcode.com)"
+AOC_COOKIE="cookie: session=${AOC_SESSION_COOKIE}"
 
 mkdir -p $YEAR_FOLDER/input $YEAR_FOLDER/prompts
 
@@ -48,5 +50,6 @@ function download_input() {
     | perl -pe 'chomp if eof' > $TARGET_FILEPATH
 }
 
+echo "Make sure to set your AOC session cookie in .env"
 download_prompt
 download_input
