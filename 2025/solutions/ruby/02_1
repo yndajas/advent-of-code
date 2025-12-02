@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../../lib'
+
+def solve(input)
+  ranges = input.first.split(',')
+
+  invalid_ids = []
+
+  ranges.each do |range|
+    lower, upper = range.split('-')
+
+    next unless [lower, upper].any? { it.length.even? }
+
+    if lower.length.odd?
+      lower = "1#{'0' * lower.length}"
+    elsif upper.length.odd?
+      upper = '9' * lower.length
+    end
+
+    chunk_size = lower.length / 2
+    lower_left = lower[..(chunk_size - 1)].to_i
+    upper_left = upper[..(chunk_size - 1)].to_i
+
+    (lower_left..upper_left).to_a.each do |chunk|
+      id = (chunk.to_s * 2).to_i
+      invalid_ids.push(id) if id.between?(lower.to_i, upper.to_i)
+    end
+  end
+
+  invalid_ids.sum
+end
+
+test('example', expected: 1_227_775_554, actual: solve(get_input('02_example')))
+test('real', expected: 22_062_284_697, actual: solve(get_input('02')))
