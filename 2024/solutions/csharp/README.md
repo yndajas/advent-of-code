@@ -28,4 +28,13 @@ In the day's directory within `2024/solutions/csharp`, run `dotnet run`
 
 ## Running the tests
 
-Tests are not currently implemented
+Tests are not currently implemented, except for day four, and probably not in a
+very nice way
+
+## Formatting the files
+
+Run `dotnet csharpier format path/to/file(s)` (after installing the tool per
+"Installation")
+
+`dotnet csharpier format 2024/solutions/csharp/**/*.cs` might format everything
+if you're lucky

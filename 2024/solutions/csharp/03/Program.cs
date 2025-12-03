@@ -2,12 +2,10 @@
 
 DotNetEnv.Env.Load("../../../../.env");
 
-string singleLineText = File.ReadAllText(Path.Combine(
-    Environment.GetEnvironmentVariable("ASSETS_REPO"),
-    "2024",
-    "input",
-    "03"
-)).Replace("\n", "");
+string singleLineText = File.ReadAllText(
+        Path.Combine(Environment.GetEnvironmentVariable("ASSETS_REPO"), "2024", "input", "03")
+    )
+    .Replace("\n", "");
 
 int partOne()
 {

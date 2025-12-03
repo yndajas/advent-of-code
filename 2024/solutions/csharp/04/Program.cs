@@ -11,12 +11,14 @@ namespace _04
     public class Program
     {
         public Program()
-            : this(Path.Combine(
-                  Environment.GetEnvironmentVariable("ASSETS_REPO"),
-                  "2024",
-                  "input",
-                  "04"
-              )) { }
+            : this(
+                Path.Combine(
+                    Environment.GetEnvironmentVariable("ASSETS_REPO"),
+                    "2024",
+                    "input",
+                    "04"
+                )
+            ) { }
 
         public Program(string inputPath)
         {
