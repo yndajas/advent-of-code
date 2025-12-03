@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 require 'benchmark'
+require 'dotenv'
+
+Dotenv.load
 
 def get_input(file)
-  File.readlines("2025/input/#{file}").map(&:chomp)
+  assets_repo = ENV.fetch('ASSETS_REPO') { abort('ASSETS_REPO not set') }
+  File.readlines("#{assets_repo}/2025/input/#{file}").map(&:chomp)
 end
 
 def test(description, actual:, expected: nil)

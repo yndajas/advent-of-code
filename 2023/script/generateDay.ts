@@ -19,8 +19,6 @@ const zeroPaddedDayString = day < 10 ? `0${day}` : day.toString()
 const newDirectoryPath = `${import.meta.dir}/../${zeroPaddedDayString}`
 
 mkdirSync(newDirectoryPath, { recursive: true })
-Bun.write(newDirectoryPath + '/input', '')
-Bun.write(newDirectoryPath + '/prompt.html', `<a href="https://adventofcode.com/2023/day/${day}">Webpage</a>\n`)
 Bun.write(
   newDirectoryPath + '/solution.test.ts',
   `import { describe, expect, it } from 'bun:test'
@@ -40,7 +38,7 @@ Bun.write(
   newDirectoryPath + '/solution.ts',
   `import InputUtils from '../inputUtils'
 
-const inputPath = './${zeroPaddedDayString}/input'
+const inputPath = \`\${process.env.ASSETS_REPO}/2023/input/${zeroPaddedDayString}\`
 
 const partOne = async (): Promise<number> => {
   const lines = await InputUtils.getInputLines(inputPath)

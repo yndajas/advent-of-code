@@ -1,7 +1,7 @@
 type CoordinateOrMovement = { x: number; y: number };
 
 const byteFallCoordinates: CoordinateOrMovement[] = (
-	await Bun.file(`${import.meta.dir}/../../../input/18`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/18`).text()
 )
 	.split("\n")
 	.map((coordinateString) => {

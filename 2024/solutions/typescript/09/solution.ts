@@ -1,5 +1,5 @@
 const diskMapString = await Bun.file(
-	`${import.meta.dir}/../../../input/09`,
+	`${process.env.ASSETS_REPO}/2024/input/09`,
 ).text();
 
 function partOne() {

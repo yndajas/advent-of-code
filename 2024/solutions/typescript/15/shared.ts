@@ -1,5 +1,5 @@
 const [unparsedMap, unparsedInstructions] = (
-	await Bun.file(`${import.meta.dir}/../../../input/15`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/15`).text()
 ).split("\n\n");
 const instructions = unparsedInstructions.replaceAll("\n", "");
 const mapLines = unparsedMap.split("\n");

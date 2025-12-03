@@ -1,5 +1,5 @@
 const [unparsedPatterns, unparsedDesigns] = (
-	await Bun.file(`${import.meta.dir}/../../../input/19`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/19`).text()
 ).split("\n\n");
 
 const patterns = unparsedPatterns.split(", ");

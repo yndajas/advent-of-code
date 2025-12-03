@@ -1,5 +1,5 @@
 const lines = (
-	await Bun.file(`${import.meta.dir}/../../../input/01`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/01`).text()
 ).split("\n");
 
 type LocationId = number;

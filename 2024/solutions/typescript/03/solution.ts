@@ -1,5 +1,5 @@
 const singleLineText = (
-	await Bun.file(`${import.meta.dir}/../../../input/03`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/03`).text()
 ).replaceAll("\n", "");
 
 function partOne() {

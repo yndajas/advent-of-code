@@ -1,8 +1,11 @@
+use dotenv;
 use std::collections::HashMap;
 use utils::{numbers_from_delimited_string, read_lines};
 
 fn main() {
-    let lines = read_lines("../../../input/01");
+    dotenv::from_filename("../../../../.env").ok();
+    let input_path = dotenv::var("ASSETS_REPO").unwrap();
+    let lines = read_lines(&(input_path + "/2024/input/01"));
     println!("{}", part_one(&lines));
     println!("{}", part_two(&lines));
 }

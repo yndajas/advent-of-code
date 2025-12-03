@@ -1,5 +1,5 @@
 const map = (
-	await Bun.file(`${import.meta.dir}/../../../input/20`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/20`).text()
 ).split("\n");
 
 type CoordinateOrMovement = { x: number; y: number };

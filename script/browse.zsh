@@ -4,6 +4,8 @@
 # $ PATH/TO/SCRIPT 2024 3
 # $ PATH/TO/SCRIPT 2024 12
 
+source .env
+
 if [ ! "$#" = 2 ]; then
   echo "Wrong number of arguments.\n\nUsage:\n$ PATH/TO/SCRIPT YEAR DAY\n\nExample from project root:\n$ script/browse.zsh 2024 8"
   return
@@ -19,7 +21,7 @@ else
 fi
 
 SCRIPT_FOLDER=$(dirname $0)
-PROMPT_FILEPATH=$SCRIPT_FOLDER/../$YEAR/prompts/$ZERO_PADDED_DAY.html
+PROMPT_FILEPATH=$ASSETS_REPO/$YEAR/prompts/$ZERO_PADDED_DAY.html
 
 cat $PROMPT_FILEPATH \
   | npx html-minifier --collapse-whitespace --remove-tag-whitespace \

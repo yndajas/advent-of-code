@@ -21,7 +21,7 @@ else
 fi
 
 SCRIPT_FOLDER=$(dirname $0)
-YEAR_FOLDER=$SCRIPT_FOLDER/../$YEAR
+YEAR_FOLDER=$ASSETS_REPO/$YEAR
 BASE_URL=https://adventofcode.com/$YEAR/day/$DAY
 AOC_COOKIE="cookie: session=${AOC_SESSION_COOKIE}"
 
@@ -30,7 +30,7 @@ mkdir -p $YEAR_FOLDER/input $YEAR_FOLDER/prompts
 function download_prompt() {
   echo "Downloading prompt..."
 
-  TARGET_FILEPATH=$SCRIPT_FOLDER/../$YEAR/prompts/$ZERO_PADDED_DAY.html
+  TARGET_FILEPATH=$YEAR_FOLDER/prompts/$ZERO_PADDED_DAY.html
 
   echo "<pre>" > $TARGET_FILEPATH
   cat $SCRIPT_FOLDER/../art/$ZERO_PADDED_DAY >> $TARGET_FILEPATH
@@ -40,7 +40,7 @@ function download_prompt() {
 }
 
 function download_input() {
-  TARGET_FILEPATH=$SCRIPT_FOLDER/../$YEAR/input/$ZERO_PADDED_DAY
+  TARGET_FILEPATH=$YEAR_FOLDER/input/$ZERO_PADDED_DAY
 
   [ -e $TARGET_FILEPATH ] && return
 

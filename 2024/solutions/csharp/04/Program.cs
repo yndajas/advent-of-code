@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
+DotNetEnv.Env.Load("../../../../.env");
+
 _04.Program program = new();
 Console.WriteLine(program.PartOne());
 Console.WriteLine(program.PartTwo());
@@ -9,7 +11,12 @@ namespace _04
     public class Program
     {
         public Program()
-            : this("../../../input/04") { }
+            : this(Path.Combine(
+                  Environment.GetEnvironmentVariable("ASSETS_REPO"),
+                  "2024",
+                  "input",
+                  "04"
+              )) { }
 
         public Program(string inputPath)
         {

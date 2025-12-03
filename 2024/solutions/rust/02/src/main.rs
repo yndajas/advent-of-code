@@ -1,7 +1,10 @@
+use dotenv;
 use utils::{numbers_from_delimited_string, read_lines};
 
 fn main() {
-    let lines = read_lines("../../../input/02");
+    dotenv::from_filename("../../../../.env").ok();
+    let input_path = dotenv::var("ASSETS_REPO").unwrap();
+    let lines = read_lines(&(input_path + "/2024/input/02"));
     println!("{}", part_one_solution_one(&lines));
     println!("{}", part_one_solution_two(&lines));
     println!("{}", part_two(&lines));

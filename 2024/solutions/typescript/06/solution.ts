@@ -1,5 +1,5 @@
 const lines = (
-	await Bun.file(`${import.meta.dir}/../../../input/06`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/06`).text()
 ).split("\n");
 
 type Coordinate = {

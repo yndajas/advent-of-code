@@ -7,10 +7,13 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	text, err := os.ReadFile("../../../input/01")
+	godotenv.Load("../../../../.env")
+	text, err := os.ReadFile(os.Getenv("ASSETS_REPO") + "/2024/input/01")
 	if err != nil {
 		fmt.Println("Error reading input file")
 	}

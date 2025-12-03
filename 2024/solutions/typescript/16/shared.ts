@@ -1,5 +1,5 @@
 const lines = (
-	await Bun.file(`${import.meta.dir}/../../../input/16`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/16`).text()
 ).split("\n");
 const maxY = lines.length - 1;
 

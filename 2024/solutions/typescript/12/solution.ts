@@ -1,5 +1,5 @@
 const map = (
-	await Bun.file(`${import.meta.dir}/../../../input/12`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/12`).text()
 ).split("\n");
 const maxX = map[0].length - 1;
 const maxY = map.length - 1;

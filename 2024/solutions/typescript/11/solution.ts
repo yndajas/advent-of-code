@@ -1,4 +1,4 @@
-const stones = (await Bun.file(`${import.meta.dir}/../../../input/11`).text())
+const stones = (await Bun.file(`${process.env.ASSETS_REPO}/2024/input/11`).text())
 	.split(" ")
 	.map((stoneString) => Number.parseInt(stoneString, 10));
 

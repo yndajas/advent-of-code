@@ -1,4 +1,4 @@
-const input = await Bun.file(`${import.meta.dir}/../../../input/01`).text();
+const input = await Bun.file(`${process.env.ASSETS_REPO}/2015/input/01`).text();
 
 function partOne() {
 	const downDirectives = input.match(/\)/g).length;

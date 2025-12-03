@@ -1,4 +1,11 @@
-﻿var lines = File.ReadLines("../../../input/01");
+﻿DotNetEnv.Env.Load("../../../../.env");
+
+var lines = File.ReadLines(Path.Combine(
+    Environment.GetEnvironmentVariable("ASSETS_REPO"),
+    "2024",
+    "input",
+    "01"
+));
 
 int partOne()
 {

@@ -10,6 +10,8 @@
 
 1. In the day's directory within `2024/solutions/csharp`, run
    `dotnet new console`
+2. In the day's directory, run `dotnet add package DotNetEnv` to support loading
+   `.env` files with `DotNetEnv.Env.Load("path/to/file")`
 2. From the repository root, run
    `dotnet sln add 2024/solutions/csharp/DAY_FOLDER`, replacing `DAY_FOLDER`
    with the day, e.g. `02` for the second day. This registers this project with

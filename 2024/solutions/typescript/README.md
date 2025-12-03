@@ -13,9 +13,15 @@ was done in `2023/script/generateDay.ts`
 
 ## Getting the answers
 
-In the day's directory within `2024/solutions/typescript`, run
-`bun run solution.ts`
+From the repo root, run `bun run
+2024/solutions/typescript/ZERO_PADDED_DAY/solution.ts`
 
 ## Running the tests
 
-In the day's directory within `2024/solutions/typescript`, run `bun test`
+From the repo root, run `bun test 2024/solutions/typescript/ZERO_PADDED_DAY`
+
+## Running the scripts or tests from the day folder
+
+The scripts or tests could also be run from their directory if you specify the
+location of the `.env` file:
+https://bun.com/docs/runtime/environment-variables#manually-specifying-env-files

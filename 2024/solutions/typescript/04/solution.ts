@@ -1,5 +1,5 @@
 const rows = (
-	await Bun.file(`${import.meta.dir}/../../../input/04`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/04`).text()
 ).split("\n");
 const maxRowIndex = rows.length - 1;
 const maxColumnIndex = rows[0].length - 1;

@@ -1,5 +1,5 @@
 const [rules, updates] = (
-	await Bun.file(`${import.meta.dir}/../../../input/05`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/05`).text()
 )
 	.split("\n\n")
 	.map((section) => section.split("\n"));

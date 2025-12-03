@@ -1,6 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 
-string singleLineText = File.ReadAllText("../../../input/03").Replace("\n", "");
+DotNetEnv.Env.Load("../../../../.env");
+
+string singleLineText = File.ReadAllText(Path.Combine(
+    Environment.GetEnvironmentVariable("ASSETS_REPO"),
+    "2024",
+    "input",
+    "03"
+)).Replace("\n", "");
 
 int partOne()
 {
