@@ -6,9 +6,19 @@
 
 source .env
 
+if [[ -z "${AOC_SESSION_COOKIE}" ]]; then
+  echo 'Error: AoC session cookie not set in .env'
+  exit 1
+fi
+
+if [[ -z "${ASSETS_REPO}" ]]; then
+  echo 'Error: assets repo not set in .env'
+  exit 1
+fi
+
 if [ ! "$#" = 2 ]; then
   echo "Wrong number of arguments.\n\nUsage:\n$ PATH/TO/SCRIPT YEAR DAY\n\nExample from project root:\n$ script/download.zsh 2024 8"
-  return
+  exit 1
 fi
 
 YEAR=$1
@@ -50,6 +60,5 @@ function download_input() {
     | perl -pe 'chomp if eof' > $TARGET_FILEPATH
 }
 
-echo "Make sure to set your AOC session cookie in .env"
 download_prompt
 download_input

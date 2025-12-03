@@ -6,9 +6,14 @@
 
 source .env
 
+if [[ -z "${ASSETS_REPO}" ]]; then
+  echo 'Error: assets repo not set in .env'
+  exit 1
+fi
+
 if [ ! "$#" = 2 ]; then
   echo "Wrong number of arguments.\n\nUsage:\n$ PATH/TO/SCRIPT YEAR DAY\n\nExample from project root:\n$ script/browse.zsh 2024 8"
-  return
+  exit 1
 fi
 
 YEAR=$1
