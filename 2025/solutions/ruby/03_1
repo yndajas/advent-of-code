@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../../lib'
+
+def solve(input)
+  bank_size = input.first.length
+
+  input.map do |bank|
+    digit_pool = bank.chars.map(&:to_i)
+    first_digit = digit_pool[..(bank_size - 2)].max
+    second_digit = digit_pool[(digit_pool.index(first_digit) + 1)..].max
+    "#{first_digit}#{second_digit}".to_i
+  end.sum
+end
+
+test('example', expected: 357, actual: solve(get_input('03_example')))
+test('real', expected: 17_383, actual: solve(get_input('03')))
+
+benchmark { solve(get_input('03')) }
