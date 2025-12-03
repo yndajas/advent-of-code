@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../../lib'
+
+def solve(input)
+  bank_size = input.first.length
+
+  input.map do |bank|
+    digit_pool = bank.chars.map(&:to_i)
+    digits = []
+    left = 0
+
+    while digits.length < 12
+      right = bank_size - 1 - (11 - digits.length)
+      scan_range = digit_pool[left..right]
+      digits.push(scan_range.max)
+
+      left += scan_range.index(digits.last) + 1
+    end
+
+    digits.map(&:to_s).join.to_i
+  end.sum
+end
+
+test(
+  'example',
+  expected: 3_121_910_778_619,
+  actual: solve(get_input('03_example')),
+)
+test('real', expected: 172_601_598_658_203, actual: solve(get_input('03')))
+
+benchmark { solve(get_input('03')) }
