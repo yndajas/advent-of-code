@@ -1,0 +1,56 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../../lib'
+
+def neighbours(map:, row_index:, column_index:)
+  min_index = 0
+  max_index = map.length - 1
+
+  [row_index - 1, row_index, row_index + 1].flat_map do |neighbour_row_index|
+    next unless neighbour_row_index.between?(min_index, max_index)
+
+    [
+      column_index - 1,
+      column_index,
+      column_index + 1,
+    ].map do |neighbour_column_index|
+      next unless neighbour_column_index.between?(min_index, max_index)
+      next if [row_index, column_index] == [
+        neighbour_row_index, neighbour_column_index
+      ]
+
+      map[neighbour_row_index][neighbour_column_index]
+    end
+  end.compact
+end
+
+def solve(input)
+  removed = 0
+  continue = true
+
+  while continue
+    continue = false
+
+    input.flat_map.with_index do |row, row_index|
+      row.each_char.map.with_index do |cell, column_index|
+        next if cell == '.'
+
+        if neighbours(
+          map: input, row_index:, column_index:,
+        ).count('@') < 4
+          input[row_index][column_index] = '.'
+          continue ||= true
+          removed += 1
+        end
+      end
+    end
+  end
+
+  removed
+end
+
+test('example', expected: 43, actual: solve(get_input('04_example')))
+test('real', expected: 8758, actual: solve(get_input('04')))
+
+benchmark { solve(get_input('04')) }
