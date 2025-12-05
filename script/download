@@ -26,7 +26,6 @@ else
   zero_padded_day="${day}"
 fi
 
-script_folder=$(dirname "${0}")
 year_folder="${ASSETS_REPO}/${year}"
 base_url="https://adventofcode.com/${year}/day/${day}"
 aoc_cookie="cookie: session=${AOC_SESSION_COOKIE}"
@@ -38,13 +37,10 @@ function download_prompt() {
 
   target_filepath="${year_folder}/prompts/${zero_padded_day}.html"
 
-  echo '<pre>' > "${target_filepath}"
   {
-    cat "${script_folder}/../art/${zero_padded_day}";
-    echo '</pre>';
-    echo "<a href=\"${base_url}\">open on web</a>";
+    echo "<a href=\"${base_url}\">Open on web</a>";
     curl -sS "${base_url}" -H "${aoc_cookie}" | pup -p -i 0 --pre article;
-  } >> "${target_filepath}"
+  } > "${target_filepath}"
 }
 
 function download_input() {
