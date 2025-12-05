@@ -44,7 +44,7 @@ function download_prompt() {
 }
 
 function download_input() {
-  target_filepath="${year_folder}/input/${zero_padded_day}"
+  target_filepath="${year_folder}/input/${zero_padded_day}.txt"
 
   [[ -e "${target_filepath}" ]] && return
 
