@@ -20,15 +20,21 @@ def test(description, actual:, expected: nil)
     '❌'
   end
 
-  output = "#{description} #{result}"
+  output = "#{result} #{description}"
 
   if expected.nil?
-    output += "\ngot: #{actual.inspect}\n\n"
+    output += " - got #{actual.inspect}"
   elsif expected && actual != expected
-    output += "\nexpected: #{expected.inspect}\ngot: #{actual.inspect}\n\n"
+    output += " - expected #{expected.inspect}, got #{actual.inspect}"
   end
 
   puts output
+end
+
+def test_multiple(test_args)
+  puts "\n#{Time.now.strftime('%F %T')}"
+
+  test_args.each { |desciption, named| test(desciption, **named) }
 end
 
 def benchmark(description: '', times: [1, 10, 100], &block)

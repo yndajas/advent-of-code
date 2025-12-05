@@ -50,7 +50,11 @@ def solve(input)
   removed
 end
 
-test('example', expected: 43, actual: solve(get_input('04_example')))
-test('real', expected: 8758, actual: solve(get_input('04')))
+test_multiple(
+  [
+    ['example', { expected: 43, actual: solve(get_input('04_example')) }],
+    ['real', { expected: 8758, actual: solve(get_input('04')) }],
+  ],
+)
 
 benchmark { solve(get_input('04')) }
