@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+if [[ $# -ne 1 ]]; then
+  echo 'Usage: script/run path/to/script'
+  exit 1
+fi
+
+script=$1
+
+\ls "${script}" | entr -r "${script}"

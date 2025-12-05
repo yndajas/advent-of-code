@@ -57,4 +57,4 @@ test_multiple(
   ],
 )
 
-benchmark { solve(get_input('04')) }
+# benchmark { solve(get_input('04')) }
