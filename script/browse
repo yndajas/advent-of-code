@@ -26,10 +26,18 @@ prompt_filepath="${ASSETS_REPO}/${year}/prompts/${zero_padded_day}.html"
 
 cat "${prompt_filepath}" \
   | npx html-minifier --collapse-whitespace --remove-tag-whitespace \
-  | pandoc --from=html --to=markdown_strict+backtick_code_blocks --lua-filter="${script_folder}/code_block.lua" --wrap=none \
-  | sed 's/\ \([.,:;!?)]\)/\1/g' \
-  | sed 's/( \([`*]\)/(\1/g' \
-  | sed 's/\([`*]\) )/\1)/g' \
-  | sed 's/\([^ ][-]\) \([`*]\)/\1\2/g' \
-  | sed 's/\([`*]\) \([-][^ ]\)/\1\2/g' \
+  | pandoc --from=html-native_divs-native_spans --to=markdown_strict+backtick_code_blocks --lua-filter="${script_folder}/code_block.lua" --wrap=none \
+  | sed -r \
+      -e 's/ ([.,:;!?])/\1/g' \
+      -e 's/ (s[^a-z])/\1/g' \
+      -e 's/\( /\(/g' \
+      -e 's/ \)/\)/g' \
+      -e 's/([^ ]-) ([`*])/\1\2/g' \
+      -e 's/([`*]) (-[^ ])/\1\2/g' \
+      -e 's/(\*[^`]+)( `[^`]+`)\*/\1*\2/g' \
+      -e 's/\*(`[^`]+` )([^`]+\*)/\1*\2/g' \
+      -e 's/\*`/`/g' \
+      -e 's/`\*/`/g' \
+      -e 's/ ``//g' \
+      -e 's/`` //g' \
   | glow -p -s "${script_folder}/glow.json"
