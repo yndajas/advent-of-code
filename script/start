@@ -21,7 +21,27 @@ fi
 year=$1
 day=$2
 
+if [[ "${day}" -lt 10 ]]; then
+  zero_padded_day="0${day}"
+else
+  zero_padded_day="${day}"
+fi
+
 script_folder=$(dirname "${0}")
 
-"${script_folder}/download" "${year}" "${day}" && \
-"${script_folder}/browse" "${year}" "${day}"
+"${script_folder}/download" "${year}" "${day}" || exit 1
+
+script_path_2025="${year}/solutions/ruby/${zero_padded_day}"
+
+echo "
+part one
+$ vim ${script_path_2025}_1 ../advent-of-code-assets/2025/input/${zero_padded_day}_example
+$ script/run_with_reload ${script_path_2025}_1
+
+part two
+$ vim ${script_path_2025}_2 ../advent-of-code-assets/2025/input/${zero_padded_day}_example
+$ script/run_with_reload ${script_path_2025}_2
+"
+
+read -r '?Press enter to continue ' && \
+  "${script_folder}/browse" "${year}" "${day}"
