@@ -1,0 +1,62 @@
+#!/usr/bin/env zsh
+
+source .env
+
+if [[ -z "${AOC_SESSION_COOKIE}" ]]; then
+  echo 'Error: AoC session cookie not set in .env'
+  exit 1
+fi
+
+if [[ -z "${ASSETS_REPO}" ]]; then
+  echo 'Error: assets repo not set in .env'
+  exit 1
+fi
+
+if [[ $# -ne 2 ]]; then
+  echo 'Usage: script/download year day'
+  exit 1
+fi
+
+year=$1
+day=$2
+
+if [[ "${day}" -lt 10 ]]; then
+  zero_padded_day="0${day}"
+else
+  zero_padded_day="${day}"
+fi
+
+script_folder=$(dirname "${0}")
+year_folder="${ASSETS_REPO}/${year}"
+base_url="https://adventofcode.com/${year}/day/${day}"
+aoc_cookie="cookie: session=${AOC_SESSION_COOKIE}"
+
+mkdir -p "${year_folder}/input" "${year_folder}/prompts"
+
+function download_prompt() {
+  echo 'Downloading prompt...'
+
+  target_filepath="${year_folder}/prompts/${zero_padded_day}.html"
+
+  echo '<pre>' > "${target_filepath}"
+  {
+    cat "${script_folder}/../art/${zero_padded_day}";
+    echo '</pre>';
+    echo "<a href=\"${base_url}\">open on web</a>";
+    curl -sS "${base_url}" -H "${aoc_cookie}" | pup -p -i 0 --pre article;
+  } >> "${target_filepath}"
+}
+
+function download_input() {
+  target_filepath="${year_folder}/input/${zero_padded_day}"
+
+  [[ -e "${target_filepath}" ]] && return
+
+  echo 'Downloading input...'
+
+  curl -sS "${base_url}/input" -H "${aoc_cookie}" \
+    | perl -pe 'chomp if eof' > "${target_filepath}"
+}
+
+download_prompt
+download_input

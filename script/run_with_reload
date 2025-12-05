@@ -7,4 +7,4 @@ fi
 
 script=$1
 
-\ls "${script}" | entr -r "${script}"
+find "${script}" | entr -r "${script}"

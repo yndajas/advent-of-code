@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+source .env
+
+if [[ -z "${ASSETS_REPO}" ]]; then
+  echo 'Error: assets repo not set in .env'
+  exit 1
+fi
+
+if [[ -n "$(git -C "${ASSETS_REPO}" status --porcelain)" ]]; then
+  echo 'Warning: assets repo has uncommitted changes'
+elif ! git -C "${ASSETS_REPO}" diff "@{upstream}" --quiet; then
+  echo 'Warning: assets repo has unpushed changes'
+fi
+
+if [[ $# -ne 2 ]]; then
+  echo 'Usage: script/start year day'
+  exit 1
+fi
+
+year=$1
+day=$2
+
+script_folder=$(dirname "${0}")
+
+"${script_folder}/download" "${year}" "${day}" && \
+"${script_folder}/browse" "${year}" "${day}"
