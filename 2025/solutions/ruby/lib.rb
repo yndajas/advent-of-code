@@ -5,7 +5,7 @@ require 'dotenv'
 
 Dotenv.load
 
-def get_input(file, raw: true)
+def get_input(file, raw: false)
   assets_repo = ENV.fetch('ASSETS_REPO') { abort('ASSETS_REPO not set') }
   path = "#{assets_repo}/2025/input/#{file}"
 
