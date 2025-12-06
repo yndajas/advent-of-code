@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  total = 0
+  current_operator = nil
+  current_operands = []
+
+  (0..(input.first.length - 1)).each do |column_index|
+    current_operator ||= input.last[column_index]
+    operand = input[0..(input.length - 2)].map { it[column_index] }.join.to_i
+
+    if column_index == input.first.length - 1
+      current_operands.push(operand)
+      total += current_operands.reduce(&:"#{current_operator}")
+    elsif operand.zero?
+      total += current_operands.reduce(&:"#{current_operator}")
+      current_operator = nil
+      current_operands.clear
+    else
+      current_operands.push(operand)
+    end
+  end
+
+  total
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 3_263_827,
+      actual: solve(get_input('06_example.txt')),
+    }],
+    ['real', {
+      expected: 11_602_774_058_280,
+      actual: solve(get_input('06.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('06.txt')) }
