@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  input = input.map { it.gsub(/ +/, ' ').sub(/^ /, '') }
+  operators = input.pop.split
+  all_problem_operands = Array.new(input.first.split.length) { [] }
+  input.each do |line|
+    line.split.each_with_index do |operand, index|
+      all_problem_operands[index].push(operand.to_i)
+    end
+  end
+
+  all_problem_operands.map.with_index do |problem_operands, index|
+    operator = operators[index]
+    problem_operands.reduce(&:"#{operator}")
+  end.sum
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 4_277_556,
+      actual: solve(get_input('06_example.txt')),
+    }],
+    ['real', {
+      expected: 4_583_860_641_327,
+      actual: solve(get_input('06.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('06.txt')) }
