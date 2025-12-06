@@ -5,9 +5,15 @@ require 'dotenv'
 
 Dotenv.load
 
-def get_input(file)
+def get_input(file, raw: true)
   assets_repo = ENV.fetch('ASSETS_REPO') { abort('ASSETS_REPO not set') }
-  File.readlines("#{assets_repo}/2025/input/#{file}").map(&:chomp)
+  path = "#{assets_repo}/2025/input/#{file}"
+
+  if raw
+    File.read(path)
+  else
+    File.readlines(path).map(&:chomp)
+  end
 end
 
 def test(description, actual:, expected: nil)
