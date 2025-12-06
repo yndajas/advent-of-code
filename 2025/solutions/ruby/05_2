@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  fresh_id_ranges = input.split("\n\n").first.split("\n")
+
+  fresh_id_ranges.map! do |range|
+    range.split('-').map(&:to_i)
+  end.sort_by!(&:first)
+
+  fresh_id_ranges = fresh_id_ranges.each_with_object([]) do |current, acc|
+    if !acc.empty? && current.first <= acc.last[1]
+      acc.last[1] = [acc.last[1], current.last].max
+    else
+      acc.push(current)
+    end
+  end
+
+  fresh_id_ranges.reduce(0) do |acc, current|
+    acc + (current.last - current.first + 1)
+  end
+end
+
+test_multiple(
+  [
+    [
+      'example',
+      {
+        expected: 14,
+        actual: solve(get_input('05_example.txt', raw: true)),
+      },
+    ],
+    [
+      'real',
+      {
+        expected: 341_753_674_214_273,
+        actual: solve(get_input('05.txt', raw: true)),
+      },
+    ],
+  ],
+)
+
+benchmark { solve(get_input('05.txt', raw: true)) }
