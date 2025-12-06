@@ -32,16 +32,28 @@ script_folder=$(dirname "${0}")
 "${script_folder}/download" "${year}" "${day}" || exit 1
 
 script_path_2025="${year}/solutions/ruby/${zero_padded_day}"
-
-echo "
-part one
-$ vim ${script_path_2025}_1 ../advent-of-code-assets/2025/input/${zero_padded_day}_example.txt
-$ script/run_with_reload ${script_path_2025}_1
-
-part two
-$ vim ${script_path_2025}_2 ../advent-of-code-assets/2025/input/${zero_padded_day}_example.txt
-$ script/run_with_reload ${script_path_2025}_2
+part_one_script_path_2025="${script_path_2025}_1"
+part_two_script_path_2025="${script_path_2025}_2"
+part_one_suggestion="
+$ vim ${part_one_script_path_2025} ../advent-of-code-assets/2025/input/${zero_padded_day}_example.txt
+$ script/run_with_reload ${part_one_script_path_2025}
 "
+part_two_suggestion="
+$ vim ${part_two_script_path_2025} ../advent-of-code-assets/2025/input/${zero_padded_day}_example.txt
+$ script/run_with_reload ${part_two_script_path_2025}
+"
+
+if [[ ! -f "${part_one_script_path_2025}" ]]; then
+  touch "${part_one_script_path_2025}"
+  chmod +x "${part_one_script_path_2025}"
+  echo "${part_one_suggestion}"
+elif [[ ! -f "${part_two_script_path_2025}" ]]; then
+  cp "${part_one_script_path_2025}" "${part_two_script_path_2025}"
+  echo "${part_two_suggestion}"
+else
+  echo "part one${part_one_suggestion}
+part_two${part_two_suggestion}"
+fi
 
 read -r '?Press enter to continue ' && \
   "${script_folder}/browse" "${year}" "${day}"
