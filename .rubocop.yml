@@ -10,6 +10,9 @@ Layout/EndAlignment:
 Layout/LineLength:
   Max: 80
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 Metrics/AbcSize:
   Enabled: false
 
@@ -20,6 +23,9 @@ Metrics/MethodLength:
   Enabled: false
 
 Metrics/PerceivedComplexity:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
 
 Style/HashSyntax:
