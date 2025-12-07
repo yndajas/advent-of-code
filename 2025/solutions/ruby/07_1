@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  beam_trace = input.map(&:dup)
+
+  beam_trace.each_with_index do |row, row_index|
+    next if row_index == beam_trace.length - 1
+
+    row.each_char.with_index do |char, column_index|
+      if %w[S |].include?(char)
+        if beam_trace[row_index + 1][column_index] == '.'
+          beam_trace[row_index + 1][column_index] = '|'
+        elsif beam_trace[row_index + 1][column_index] == '^'
+          beam_trace[row_index + 1][column_index] = '*'
+          beam_trace[row_index + 1][column_index - 1] = '|'
+          beam_trace[row_index + 1][column_index + 1] = '|'
+        end
+      end
+    end
+  end
+
+  beam_trace.reduce(0) { |acc, curr| acc + curr.count('*') }
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 21,
+      actual: solve(get_input('07_example.txt')),
+    }],
+    ['real', {
+      expected: 1656,
+      actual: solve(get_input('07.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('07.txt')) }
