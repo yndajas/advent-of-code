@@ -1,0 +1,136 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+class PathCounter
+  attr_reader :map, :known_paths
+
+  def initialize(map)
+    @map = map
+    @known_paths = Array.new(map.length - 1) do
+      Array.new(map.first.length, nil)
+    end
+  end
+
+  def count_paths(row_index:, column_index:)
+    return 1 if row_index == map.length - 1
+
+    known_paths[row_index][column_index] ||= begin
+      next_row_index = row_index + 1
+
+      if map[next_row_index][column_index] == '.'
+        count_paths(row_index: next_row_index, column_index:)
+      else
+        [
+          count_paths(
+            row_index: next_row_index, column_index: column_index - 1,
+          ),
+          count_paths(
+            row_index: next_row_index, column_index: column_index + 1,
+          ),
+        ].sum
+      end
+    end
+  end
+end
+
+def solve(input)
+  PathCounter
+    .new(input)
+    .count_paths(row_index: 0, column_index: input.first.index('S'))
+end
+
+test_multiple(
+  [
+    ['ex0', {
+      expected: 1,
+      actual: solve(
+        [
+          '.......S.......',
+          '...............',
+        ],
+      ),
+    }],
+    ['ex1', {
+      expected: 2,
+      actual: solve(
+        [
+          ' .......S.......',
+          ' ...............',
+          ' .......^.......',
+          ' ...............',
+        ],
+      ),
+    }],
+    ['ex2', {
+      expected: 4,
+      actual: solve(
+        [
+          '.......S.......',
+          '...............',
+          '.......^.......',
+          '...............',
+          '......^.^......',
+          '...............',
+        ],
+      ),
+    }],
+    ['ex3', {
+      expected: 6,
+      actual: solve(
+        [
+          '.......S.......',
+          '...............',
+          '.......^.......',
+          '...............',
+          '......^.^......',
+          '...............',
+          '.......^.......',
+          '...............',
+        ],
+      ),
+    }],
+    ['ex4', {
+      expected: 7,
+      actual: solve(
+        [
+          '.......S.......',
+          '...............',
+          '.......^.......',
+          '...............',
+          '......^.^......',
+          '...............',
+          '.....^.^.......',
+          '...............',
+        ],
+      ),
+    }],
+
+    ['ex5', {
+      expected: 8,
+      actual: solve(
+        [
+          '.......S.......',
+          '...............',
+          '.......^.......',
+          '...............',
+          '......^.^......',
+          '...............',
+          '.....^.^.^.....',
+          '...............',
+        ],
+      ),
+    }],
+    ['example', {
+      expected: 40,
+      actual: solve(get_input('07_example.txt')),
+    }],
+    ['real', {
+      expected: 76_624_086_587_804,
+      actual: solve(get_input('07.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('07.txt')) }
