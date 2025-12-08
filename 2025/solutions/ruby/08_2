@@ -1,0 +1,89 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def distance(box_a, box_b)
+  ax, ay, az = box_a
+  bx, by, bz = box_b
+
+  Math.sqrt((ax - bx).pow(2) + (ay - by).pow(2) + (az - bz).pow(2))
+end
+
+test_multiple(
+  [
+    ['distance ex1', {
+      expected: 316.90219311326956,
+      actual: distance([162, 817, 812], [425, 690, 689]),
+    }],
+    ['distance ex2', {
+      expected: 1069.869618224576,
+      actual: distance([431, 825, 988], [970, 615, 88]),
+    }],
+  ],
+)
+
+def solve(input)
+  boxes = input.map { it.split(',').map(&:to_i) }
+  distances = []
+
+  boxes[0..(boxes.length - 2)].each_with_index do |box_a, index_a|
+    ((index_a + 1)..(boxes.length - 1)).each do |index_b|
+      distances.push(
+        [
+          [index_a, index_b],
+          distance(box_a, boxes[index_b]),
+        ],
+      )
+    end
+  end
+
+  distances
+    .sort_by! { it[1] }
+
+  circuits = []
+  box_indices = (0..(boxes.length - 1)).to_a
+
+  until box_indices.empty? && circuits.length == 1
+    index_a, index_b = distances.shift.first
+    last_x_a = boxes[index_a].first
+    last_x_b = boxes[index_b].first
+
+    circuit_index_with_a = circuits.find_index { it.any?(index_a) }
+    circuit_index_with_b = circuits.find_index { it.any?(index_b) }
+
+    if circuit_index_with_a && circuit_index_with_b
+      next if circuit_index_with_a == circuit_index_with_b
+
+      circuits[circuit_index_with_a].concat(circuits[circuit_index_with_b])
+      circuits.delete_at(circuit_index_with_b)
+    elsif circuit_index_with_a
+      circuits[circuit_index_with_a].push(index_b)
+      box_indices.delete_at(box_indices.index(index_b))
+    elsif circuit_index_with_b
+      circuits[circuit_index_with_b].push(index_a)
+      box_indices.delete_at(box_indices.index(index_a))
+    else
+      circuits.push([index_a, index_b])
+      box_indices.delete_at(box_indices.index(index_a))
+      box_indices.delete_at(box_indices.index(index_b))
+    end
+  end
+
+  last_x_a * last_x_b
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 25_272,
+      actual: solve(get_input('08_example.txt')),
+    }],
+    ['real', {
+      expected: 8_420_405_530,
+      actual: solve(get_input('08.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('08.txt')) }
