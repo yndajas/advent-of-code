@@ -1,0 +1,9 @@
+#!/usr/bin/env lua
+
+local input = io.open("../advent-of-code-assets/2015/input/01", "r"):read("*a")
+
+local ups, down_count = input:gsub("%)", "")
+local up_count = ups:len()
+
+-- 280
+print(up_count - down_count)
