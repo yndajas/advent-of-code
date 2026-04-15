@@ -1,0 +1,20 @@
+#!/usr/bin/env lua
+
+local total = 0
+
+for dimensions in io.lines("../advent-of-code-assets/2015/input/02.txt") do
+  local _, _, length, width, height =
+    string.find(dimensions, "(%d+)x(%d+)x(%d+)")
+
+  local dimensions_table =
+    { tonumber(length), tonumber(width), tonumber(height) }
+  table.sort(dimensions_table)
+
+  total = total
+    + 2 * dimensions_table[1]
+    + 2 * dimensions_table[2]
+    + length * width * height
+end
+
+-- 3783758
+print(total)

@@ -1,0 +1,19 @@
+#!/usr/bin/env lua
+
+local total = 0
+
+for dimensions in io.lines("../advent-of-code-assets/2015/input/02.txt") do
+  local _, _, length, width, height =
+    string.find(dimensions, "(%d+)x(%d+)x(%d+)")
+  local area_lw, area_wh, area_hl =
+    length * width, width * height, height * length
+
+  total = total
+    + 2 * area_lw
+    + 2 * area_wh
+    + 2 * area_hl
+    + math.min(area_lw, area_wh, area_hl)
+end
+
+-- 1588178
+print(total)
