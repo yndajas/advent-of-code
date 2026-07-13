@@ -31,7 +31,7 @@ GEM
     ruby-progressbar (1.13.0)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
-    unicode-emoji (4.1.0)
+    unicode-emoji (4.2.0)
 
 PLATFORMS
   arm64-darwin-25
@@ -42,4 +42,4 @@ DEPENDENCIES
   rubocop (~> 1.81)
 
 BUNDLED WITH
-   2.7.2
+  4.0.16
