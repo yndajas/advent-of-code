@@ -35,11 +35,11 @@ script_path_2025="${year}/solutions/ruby/${zero_padded_day}"
 part_one_script_path_2025="${script_path_2025}_1"
 part_two_script_path_2025="${script_path_2025}_2"
 part_one_suggestion="
-$ vim ${part_one_script_path_2025} ../advent-of-code-assets/2025/input/${zero_padded_day}_example.txt
+$ vim ${part_one_script_path_2025} ../advent-of-code-assets/${year}/input/${zero_padded_day}_example.txt
 $ script/run_with_reload ${part_one_script_path_2025}
 "
 part_two_suggestion="
-$ vim ${part_two_script_path_2025} ../advent-of-code-assets/2025/input/${zero_padded_day}_example.txt
+$ vim ${part_two_script_path_2025} ../advent-of-code-assets/${year}/input/${zero_padded_day}_example.txt
 $ script/run_with_reload ${part_two_script_path_2025}
 "
 
