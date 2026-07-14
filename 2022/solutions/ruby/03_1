@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def priority(letter)
+  if letter == letter.upcase
+    letter.ord - 38
+  else
+    letter.ord - 96
+  end
+end
+
+def solve(input)
+  input.reduce(0) do |sum, rucksack|
+    items = rucksack.scan(/\w/)
+    half_length = items.length / 2
+    compartments = [items.take(half_length), items.drop(half_length)]
+    common_letter = compartments[0].intersection(compartments[1]).first
+
+    sum + priority(common_letter)
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 157,
+      actual: solve(get_input('03_example.txt')),
+    }],
+    ['real', {
+      expected: 8202,
+      actual: solve(get_input('03.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('03.txt')) }

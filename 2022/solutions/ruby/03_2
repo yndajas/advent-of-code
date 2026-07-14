@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def priority(letter)
+  if letter == letter.upcase
+    letter.ord - 38
+  else
+    letter.ord - 96
+  end
+end
+
+def solve(input)
+  input.each_slice(3).reduce(0) do |sum, elf_group|
+    items_by_elf = elf_group.map { it.scan(/\w/) }
+    common_letter = items_by_elf[0].intersection(
+      items_by_elf[1],
+      items_by_elf[2],
+    ).first
+
+    sum + priority(common_letter)
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 70,
+      actual: solve(get_input('03_example.txt')),
+    }],
+    ['real', {
+      expected: 2864,
+      actual: solve(get_input('03.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('03.txt')) }
