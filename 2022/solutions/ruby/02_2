@@ -1,0 +1,84 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+OPPONENT_CODE_TO_SELECTION = {
+  'A' => 'R',
+  'B' => 'P',
+  'C' => 'S',
+}.freeze
+
+OUTCOME_CODE_TO_OUTCOME = {
+  'X' => 'L',
+  'Y' => 'D',
+  'Z' => 'W',
+}.freeze
+
+LOSERS = {
+  'R' => 'S',
+  'P' => 'R',
+  'S' => 'P',
+}.freeze
+
+WINNERS = {
+  'R' => 'P',
+  'P' => 'S',
+  'S' => 'R',
+}.freeze
+
+def own_selection_for_outcome(opponent_selection, outcome)
+  case outcome
+  when 'L'
+    LOSERS[opponent_selection]
+  when 'D'
+    opponent_selection
+  when 'W'
+    WINNERS[opponent_selection]
+  end
+end
+
+def outcome_score(own_selection, opponent_selection)
+  return 3 if own_selection == opponent_selection
+
+  case [own_selection, opponent_selection]
+  when %w[R S], %w[P R], %w[S P]
+    6
+  else
+    0
+  end
+end
+
+def selection_score(selection)
+  {
+    'R' => 1,
+    'P' => 2,
+    'S' => 3,
+  }[selection]
+end
+
+def solve(input)
+  input.reduce(0) do |total_score, round|
+    opponent_code, outcome_code = round.scan(/\w/)
+    opponent_selection = OPPONENT_CODE_TO_SELECTION[opponent_code]
+    outcome = OUTCOME_CODE_TO_OUTCOME[outcome_code]
+    own_selection = own_selection_for_outcome(opponent_selection, outcome)
+    total_score += selection_score(own_selection)
+    total_score + outcome_score(own_selection, opponent_selection)
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 12,
+      actual: solve(get_input('02_example.txt')),
+    }],
+    ['real', {
+      expected: 10_498,
+      actual: solve(get_input('02.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('02.txt')) }
