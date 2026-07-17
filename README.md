@@ -27,10 +27,11 @@ way to learn/practice different languages.
 | Language   | 2025 (ongoing) | 2024 | 2023 | 2022 | 2015 | Total  |
 | ---------- | -------------- | ---- | ---- | ---- | ---- | ------ |
 | TypeScript | 0              | 40   | 10   | 0    | 4    | **54** |
+| Ruby       | 16             | 0    | 0    | 10   | 2    | **28** |
 | C#         | 0              | 8    | 0    | 0    | 0    | **8**  |
-| Ruby       | 16             | 0    | 0    | 10   | 2    | **18** |
 | Go         | 0              | 4    | 0    | 0    | 0    | **4**  |
 | Rust       | 0              | 4    | 0    | 0    | 0    | **4**  |
+| Lua        | 0              | 0    | 0    | 0    | 4    | **4**  |
 
 ## Getting the prompt and input
 
