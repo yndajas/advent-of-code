@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def starting_stacks(input)
+  *rows, column_indices = input.split("\n\n").first.split("\n")
+
+  column_count = column_indices.scan(/\d+/).last.to_i
+  stacks = Array.new(column_count).fill { [] }
+  column_offset = 4
+  crate_offset = 1
+
+  rows.reverse.each do |row|
+    (0...column_count).each do |column_index|
+      crate = row[(column_index * column_offset) + crate_offset]
+      stacks[column_index].push(crate) if crate&.match(/\w/)
+    end
+  end
+
+  stacks
+end
+
+def solve(input)
+  stacks = starting_stacks(input)
+  moves = input.split("\n\n").last.split("\n")
+
+  moves.each do |move|
+    move_count, from_column, to_column = move
+      .scan(/\d+/)
+      .map.with_index do |number, index|
+        index.zero? ? number.to_i : number.to_i - 1
+      end
+
+    ordered_movers = stacks[from_column].pop(move_count)
+    stacks[to_column].concat(ordered_movers)
+  end
+
+  stacks.map(&:last).join
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 'MCD',
+      actual: solve(get_input('05_example.txt', raw: true)),
+    }],
+    ['real', {
+      expected: 'NHWZCBNBF',
+      actual: solve(get_input('05.txt', raw: true)),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('05.txt', raw: true)) }
