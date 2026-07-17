@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  input.count do |pair|
+    sections_by_elf = pair
+      .split(',')
+      .map do |sections_for_elf|
+        first, last = sections_for_elf.split('-').map(&:to_i)
+        { first:, last: }
+      end
+    sections_by_elf_sorted_by_boundary = sections_by_elf
+      .sort_by { [it[:first], -it[:last]] }
+
+    sections_by_elf_sorted_by_boundary.dig(0, :last) >=
+      sections_by_elf_sorted_by_boundary.dig(1, :first)
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 4,
+      actual: solve(get_input('04_example.txt')),
+    }],
+    ['real', {
+      expected: 878,
+      actual: solve(get_input('04.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('04.txt')) }
