@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  input.reduce(0) do |total, box|
+    l, w, h = box.scan(/\d+/).map(&:to_i)
+    two_shortest_dimensions = [l, w, h].sort.take(2)
+
+    total + [
+      two_shortest_dimensions.sum * 2,
+      l * w * h,
+    ].sum
+  end
+end
+
+test('real', expected: 3_783_758, actual: solve(get_input('02.txt')))
+
+benchmark { solve(get_input('02.txt')) }
