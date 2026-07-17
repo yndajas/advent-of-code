@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  ups = input.scan('(').count
+  downs = input.scan(')').count
+
+  ups - downs
+end
+
+test('real', expected: 280, actual: solve(get_input('01.txt', raw: true)))
+
+benchmark { solve(get_input('01.txt', raw: true)) }
