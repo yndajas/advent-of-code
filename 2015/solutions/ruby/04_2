@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'digest'
+require_relative 'lib'
+
+def solve(input)
+  number = 0
+
+  loop do
+    return number if Digest::MD5.hexdigest("#{input}#{number}")
+      .start_with?('000000')
+
+    number += 1
+  end
+end
+
+test('real', expected: 3_938_038, actual: solve(get_input('04.txt', raw: true)))
+
+benchmark { solve(get_input('04.txt', raw: true)) }
