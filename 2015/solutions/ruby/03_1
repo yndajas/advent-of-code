@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+class Santa
+  MOVEMENTS = {
+    '^' => { dx: 0, dy: -1 },
+    '>' => { dx: 1, dy: 0 },
+    'v' => { dx: 0, dy: 1 },
+    '<' => { dx: -1, dy: 0 },
+  }.freeze
+
+  def initialize
+    @x = 0
+    @y = 0
+  end
+
+  attr_reader :x, :y
+
+  def deliver(recipient_log)
+    recipient_log.add(position_string)
+  end
+
+  def move(movement_key)
+    MOVEMENTS[movement_key] => { dx:, dy: }
+    @x += dx
+    @y += dy
+  end
+
+  private
+
+  def position_string
+    "#{x},#{y}"
+  end
+end
+
+def solve(input)
+  santa = Santa.new
+  recipient_log = Set.new
+  santa.deliver(recipient_log)
+
+  input.each_char do |movement_key|
+    santa.move(movement_key)
+    santa.deliver(recipient_log)
+  end
+
+  recipient_log.size
+end
+
+test_multiple(
+  [
+    ['example 1', {
+      expected: 2,
+      actual: solve('>'),
+    }],
+    ['example 2', {
+      expected: 4,
+      actual: solve('^>v<'),
+    }],
+    ['example 3', {
+      expected: 2,
+      actual: solve('^v^v^v^v^v'),
+    }],
+    ['real', {
+      expected: 2572,
+      actual: solve(get_input('03.txt', raw: true)),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('03.txt', raw: true)) }
