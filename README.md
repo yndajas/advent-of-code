@@ -17,6 +17,7 @@ now it's 24.
 | 2024           | 40    |
 | 2023           | 10    |
 | 2022           | 10    |
+| 2016           | 2     |
 | 2015           | 8     |
 
 ### Parts solved by language by year
@@ -24,14 +25,14 @@ now it's 24.
 Solving parts in multiple languages doesn't award extra stars, but it's a fun
 way to learn/practice different languages.
 
-| Language   | 2025 (ongoing) | 2024 | 2023 | 2022 | 2015 | Total  |
-| ---------- | -------------- | ---- | ---- | ---- | ---- | ------ |
-| TypeScript | 0              | 40   | 10   | 0    | 4    | **54** |
-| Ruby       | 16             | 0    | 0    | 10   | 8    | **34** |
-| C#         | 0              | 8    | 0    | 0    | 0    | **8**  |
-| Go         | 0              | 4    | 0    | 0    | 0    | **4**  |
-| Rust       | 0              | 4    | 0    | 0    | 0    | **4**  |
-| Lua        | 0              | 0    | 0    | 0    | 4    | **4**  |
+| Language   | 2025 (ongoing) | 2024 | 2023 | 2022 | 2016 | 2015 | Total  |
+| ---------- | -------------- | ---- | ---- | ---- | ---- | ---- | ------ |
+| TypeScript | 0              | 40   | 10   | 0    | 0    | 4    | **54** |
+| Ruby       | 16             | 0    | 0    | 10   | 2    | 8    | **36** |
+| C#         | 0              | 8    | 0    | 0    | 0    | 0    | **8**  |
+| Go         | 0              | 4    | 0    | 0    | 0    | 0    | **4**  |
+| Rust       | 0              | 4    | 0    | 0    | 0    | 0    | **4**  |
+| Lua        | 0              | 0    | 0    | 0    | 0    | 4    | **4**  |
 
 ## Getting the prompt and input
 

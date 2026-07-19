@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+MOVEMENTS = [
+  { x: 0, y: -1 },
+  { x: 1, y: 0 },
+  { x: 0, y: 1 },
+  { x: -1, y: 0 },
+].freeze
+
+def solve(input)
+  coordinates = { x: 0, y: 0 }
+  movement_index = 0
+  moves = input.split(', ')
+
+  moves.each do |move|
+    movement_index = (movement_index + (move[0] == 'R' ? 1 : -1)) % 4
+    move_count = move[1..].to_i
+    coordinates[:x] += MOVEMENTS.dig(movement_index, :x) * move_count
+    coordinates[:y] += MOVEMENTS.dig(movement_index, :y) * move_count
+  end
+
+  coordinates[:x].abs + coordinates[:y].abs
+end
+
+test_multiple(
+  [
+    ['example 1', {
+      expected: 5,
+      actual: solve('R2, L3'),
+    }],
+    ['example 2', {
+      expected: 2,
+      actual: solve('R2, R2, R2'),
+    }],
+    ['example 3', {
+      expected: 12,
+      actual: solve('R5, L5, R5, R3'),
+    }],
+    ['real', {
+      expected: 301,
+      actual: solve(get_input('01.txt', raw: true)),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('01.txt', raw: true)) }
