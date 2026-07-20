@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+MOVEMENTS = {
+  'U' => -3,
+  'D' => 3,
+  'L' => -1,
+  'R' => 1,
+}.freeze
+
+def move?(position, direction)
+  true unless [position, direction] in
+    [1 | 2 | 3, 'U'] |
+    [7 | 8 | 9, 'D'] |
+    [1 | 4 | 7, 'L'] |
+    [3 | 6 | 9, 'R']
+end
+
+def solve(input)
+  position = 5
+
+  input.reduce('') do |code, line|
+    line.each_char do |direction|
+      position += MOVEMENTS[direction] if move?(position, direction)
+    end
+
+    code + position.to_s
+  end.to_i
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 1985,
+      actual: solve(get_input('02_example.txt')),
+    }],
+    ['real', {
+      expected: 73_597,
+      actual: solve(get_input('02.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('02.txt')) }

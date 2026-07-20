@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+KEYPAD = [
+  [nil, nil, 1, nil, nil],
+  [nil, 2, 3, 4, nil],
+  [5, 6, 7, 8, 9],
+  [nil, 'A', 'B', 'C'],
+  [nil, nil, 'D', nil, nil],
+].freeze
+
+def candidate_position_for(position, direction)
+  case direction
+  when 'U'
+    [
+      [position[0] - 1, 0].max,
+      position[1],
+    ]
+  when 'D'
+    [position[0] + 1, position[1]]
+  when 'L'
+    [
+      position[0],
+      [position[1] - 1, 0].max,
+    ]
+  when 'R'
+    [position[0], position[1] + 1]
+  end
+end
+
+def solve(input)
+  position = [2, 0]
+
+  input.reduce('') do |code, line|
+    line.each_char do |direction|
+      candidate_position = candidate_position_for(position, direction)
+      position = candidate_position unless KEYPAD.dig(*candidate_position).nil?
+    end
+
+    code + KEYPAD.dig(*position).to_s
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: '5DB3',
+      actual: solve(get_input('02_example.txt')),
+    }],
+    ['real', {
+      expected: 'A47DA',
+      actual: solve(get_input('02.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('02.txt')) }
