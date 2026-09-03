@@ -37,4 +37,4 @@ cat "${prompt_filepath}" \
       -e 's/\*`([^`]+)`\*/`\1`/g' \
       -e 's/ ``//g' \
       -e 's/`` //g' \
-  | glow -p -s "${script_folder}/glow.json"
+  | glow
