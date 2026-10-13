@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  input.count do |line|
+    longest, *rest = line
+      .scan(/\d+/)
+      .map(&:to_i)
+      .sort_by(&:-@)
+
+    longest < rest.sum
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 0,
+      actual: solve(get_input('03_1_example.txt')),
+    }],
+    ['real', {
+      expected: 862,
+      actual: solve(get_input('03.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('03.txt')) }

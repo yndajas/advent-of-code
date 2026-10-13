@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  input.each_slice(3).reduce(0) do |count, triplet|
+    triangles = Array.new(3) { [] }
+
+    triplet.each do |line|
+      line.scan(/\d+/).map(&:to_i).each_with_index do |length, index|
+        triangles[index].push(length)
+      end
+    end
+
+    count + triangles.count do |lengths|
+      longest, *rest = lengths.sort_by(&:-@)
+      longest < rest.sum
+    end
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 6,
+      actual: solve(get_input('03_2_example.txt')),
+    }],
+    ['real', {
+      expected: 1577,
+      actual: solve(get_input('03.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('03.txt')) }
