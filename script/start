@@ -13,13 +13,23 @@ elif ! git -C "${ASSETS_REPO}" diff "@{upstream}" --quiet; then
   echo 'Warning: assets repo has unpushed changes'
 fi
 
-if [[ $# -ne 2 ]]; then
-  echo 'Usage: script/start year day'
+if [[ $# -ne 3 ]]; then
+  echo "Usage: ${PROGRAM} year day part"
   exit 1
 fi
 
 year=$1
 day=$2
+part=$3
+
+case "${part}" in
+  1|2) ;;
+  *)
+    echo "Error: part must be 1 or 2
+Usage: ${PROGRAM} year day part"
+    exit 1
+    ;;
+esac
 
 if [[ "${day}" -lt 10 ]]; then
   zero_padded_day="0${day}"
@@ -27,33 +37,22 @@ else
   zero_padded_day="${day}"
 fi
 
-script_folder=$(dirname "${0}")
+repo_script_folder=$(dirname "${0}")
+"${repo_script_folder}/download" "${year}" "${day}" || exit 1
 
-"${script_folder}/download" "${year}" "${day}" || exit 1
+solution_script_path="${year}/solutions/ruby/${zero_padded_day}_${part}"
+touch "${solution_script_path}"
+chmod +x "${solution_script_path}"
 
-script_path_2025="${year}/solutions/ruby/${zero_padded_day}"
-part_one_script_path_2025="${script_path_2025}_1"
-part_two_script_path_2025="${script_path_2025}_2"
-part_one_suggestion="
-$ vim ${part_one_script_path_2025} ../advent-of-code-assets/${year}/input/${zero_padded_day}_example.txt
-$ script/run_with_reload ${part_one_script_path_2025}
-"
-part_two_suggestion="
-$ vim ${part_two_script_path_2025} ../advent-of-code-assets/${year}/input/${zero_padded_day}_example.txt
-$ script/run_with_reload ${part_two_script_path_2025}
-"
+tmux split-window -h
+tmux send-keys "vim ${solution_script_path} ../advent-of-code-assets/${year}/input/${zero_padded_day}_example.txt" Enter
 
-if [[ ! -f "${part_one_script_path_2025}" ]]; then
-  touch "${part_one_script_path_2025}"
-  chmod +x "${part_one_script_path_2025}"
-  echo "${part_one_suggestion}"
-elif [[ ! -f "${part_two_script_path_2025}" ]]; then
-  cp "${part_one_script_path_2025}" "${part_two_script_path_2025}"
-  echo "${part_two_suggestion}"
-else
-  echo "part one${part_one_suggestion}
-part_two${part_two_suggestion}"
-fi
+tmux split-window -v
+tmux send-keys "script/run_with_reload ${solution_script_path}" Enter
 
-read -r '?Press enter to continue ' && \
-  "${script_folder}/browse" "${year}" "${day}"
+tmux select-pane -t 1
+tmux split-window -v
+tmux send-keys 'irb' Enter
+
+tmux select-pane -t 2
+tmux send-keys -t 1 "${repo_script_folder}/browse ${year} ${day}" Enter
