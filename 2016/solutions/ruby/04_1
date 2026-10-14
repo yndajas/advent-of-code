@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def real?(room)
+  letters = room.match(/\A[a-z-]+/).to_s.tr('-', '')
+  checksum = room.match(/\[(\w+)\]/).captures.first
+
+  expected_checksum = letters
+    .chars
+    .tally
+    .sort_by { [-it[1], it[0]] }
+    .first(5)
+    .map(&:first)
+    .join
+
+  checksum == expected_checksum
+end
+
+def sector_id(room)
+  room.match(/\d+/).to_s.to_i
+end
+
+def solve(input)
+  input.reduce(0) do |sum, room|
+    real?(room) ? sum + sector_id(room) : sum
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 1514,
+      actual: solve(get_input('04_example.txt')),
+    }],
+    ['real', {
+      expected: 158_835,
+      actual: solve(get_input('04.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('04.txt')) }

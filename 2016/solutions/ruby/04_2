@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def decrypt(encrypted_name, sector_id)
+  rotation = sector_id % 26
+
+  encrypted_name.split('-').compact.map do |word|
+    word.each_char.map { rotate(it, rotation) }.join
+  end.join(' ')
+end
+
+def rotate(char, rotation)
+  code = ((char.ord - 97 + rotation) % 26) + 97
+
+  code.chr
+end
+
+def solve(input)
+  input.each do |room|
+    sector_id = room.match(/\d+/).to_s.to_i
+    encrypted_name = room.match(/\A[a-z-]+/).to_s
+    decrypted_name = decrypt(encrypted_name, sector_id)
+
+    return sector_id if decrypted_name.match?(/pole/)
+  end
+end
+
+test_multiple(
+  [
+    ['rotate a by 3', {
+      expected: 'd',
+      actual: rotate('a', 3),
+    }],
+    ['rotate y by 2', {
+      expected: 'a',
+      actual: rotate('y', 2),
+    }],
+    ['example', {
+      expected: 'very encrypted name',
+      actual: decrypt('qzmt-zixmtkozy-ivhz', 343),
+    }],
+    ['real', {
+      expected: 993,
+      actual: solve(get_input('04.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('04.txt')) }
