@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  (0..input.length).reduce(0) do |sum, index|
+    next_index = (index + 1) % input.length
+
+    if input[index] == input[next_index]
+      sum + input[index].to_i
+    else
+      sum
+    end
+  end
+end
+
+test_multiple(
+  [
+    ['example 1', {
+      expected: 3,
+      actual: solve('1122'),
+    }],
+    ['example 2', {
+      expected: 4,
+      actual: solve('1111'),
+    }],
+    ['example 3', {
+      expected: 0,
+      actual: solve('1234'),
+    }],
+    ['example 4', {
+      expected: 9,
+      actual: solve('91212129'),
+    }],
+    ['real', {
+      expected: 1029,
+      actual: solve(get_input('01.txt', raw: true)),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('01.txt', raw: true)) }
