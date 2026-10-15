@@ -40,7 +40,10 @@ fi
 repo_script_folder=$(dirname "${0}")
 "${repo_script_folder}/download" "${year}" "${day}" || exit 1
 
-solution_script_path="${year}/solutions/ruby/${zero_padded_day}_${part}"
+solution_script_folder="${year}/solutions/ruby/"
+mkdir -p "${solution_script_folder}"
+
+solution_script_path="${solution_script_folder}${zero_padded_day}_${part}"
 touch "${solution_script_path}"
 chmod +x "${solution_script_path}"
 
