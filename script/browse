@@ -26,7 +26,7 @@ prompt_filepath="${ASSETS_REPO}/${year}/prompts/${zero_padded_day}.html"
 
 cat "${prompt_filepath}" \
   | npx html-minifier --collapse-whitespace --remove-tag-whitespace \
-  | pandoc --from=html-native_divs-native_spans --to=markdown_strict+backtick_code_blocks --lua-filter="${script_folder}/code_block.lua" --wrap=none \
+  | pandoc --from=html-native_divs-native_spans --to=markdown_strict+backtick_code_blocks+strikeout --lua-filter="${script_folder}/code_block.lua" --wrap=none \
   | sed -r \
       -e 's/ ([.,:;!?])/\1/g' \
       -e 's/ (s[^a-z])/\1/g' \
