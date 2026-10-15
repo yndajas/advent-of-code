@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'digest'
+require_relative 'lib'
+
+def solve(input)
+  door_id = input.chomp
+  password = []
+  index = 0
+
+  while password.compact.length != 8
+    hash = Digest::MD5.hexdigest("#{door_id}#{index}")
+    index += 1
+
+    next unless hash.match?(/\A00000\d/)
+
+    position = hash[5].to_i
+
+    next unless position < 8
+
+    password[position] ||= hash[6]
+  end
+
+  password.join
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: '05ace8e3',
+      actual: solve(get_input('05_example.txt', raw: true)),
+    }],
+    ['real', {
+      expected: 'f2c730e5',
+      actual: solve(get_input('05.txt', raw: true)),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('05.txt', raw: true)) }
