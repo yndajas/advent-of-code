@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def nice?(string)
+  return false unless string.scan(/[aeiou]/).length >= 3
+  return false unless string.match?(/(\w)\1+/)
+
+  %w[ab cd pq xy].none? { string.match?(it) }
+end
+
+def solve(input)
+  input.count { nice?(it) }
+end
+
+test_multiple(
+  [
+    ['example 1', {
+      expected: true,
+      actual: nice?('ugknbfddgicrmopn'),
+    }],
+    ['example 2', {
+      expected: true,
+      actual: nice?('aaa'),
+    }],
+    ['example 3', {
+      expected: false,
+      actual: nice?('jchzalrnumimnmhp'),
+    }],
+    ['example 4', {
+      expected: false,
+      actual: nice?('haegwjzuvuyypxyu'),
+    }],
+    ['example 5', {
+      expected: false,
+      actual: nice?('dvszwmarrgswjxmb'),
+    }],
+    ['real', {
+      expected: 236,
+      actual: solve(get_input('05.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('05.txt')) }

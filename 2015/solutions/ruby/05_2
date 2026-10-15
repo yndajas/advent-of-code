@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def contains_non_overlapping_repeating_pair?(string)
+  (0..(string.length - 4)).any? do |index|
+    pair = string[index..(index + 1)]
+    string[(index + 2)..].match?(pair)
+  end
+end
+
+def contains_aba_repetition?(string)
+  (0..(string.length - 3)).any? do |index|
+    string[index] == string[index + 2]
+  end
+end
+
+def nice?(string)
+  return false unless contains_non_overlapping_repeating_pair?(string)
+
+  contains_aba_repetition?(string)
+end
+
+def solve(input)
+  input.count { nice?(it) }
+end
+
+test_multiple(
+  [
+    ['example 1', {
+      expected: true,
+      actual: nice?('qjhvhtzxzqqjkmpb'),
+    }],
+    ['example 2', {
+      expected: true,
+      actual: nice?('xxyxx'),
+    }],
+    ['example 3', {
+      expected: false,
+      actual: nice?('uurcxstgmygtbstg'),
+    }],
+    ['example 4', {
+      expected: false,
+      actual: nice?('ieodomkazucvgmuy'),
+    }],
+    ['real', {
+      expected: 51,
+      actual: solve(get_input('05.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('05.txt')) }
