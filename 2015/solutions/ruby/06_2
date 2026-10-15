@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def delta_per_cell(instruction)
+  case instruction
+  in /on/
+    1
+  in /off/
+    -1
+  else
+    2
+  end
+end
+
+def process(grid, instruction)
+  delta_per_cell = delta_per_cell(instruction)
+  start_x, start_y, end_x, end_y = instruction.scan(/\d+/).map(&:to_i)
+
+  (start_x..end_x).each do |x|
+    (start_y..end_y).each do |y|
+      grid[x][y] = [grid[x][y] + delta_per_cell, 0].max
+    end
+  end
+end
+
+def solve(input)
+  grid = Array.new(1000) { Array.new(1000) { 0 } }
+
+  input.each { process(grid, it) }
+
+  grid.flatten.sum
+end
+
+test_multiple(
+  [
+    ['example 1', {
+      expected: 1,
+      actual: solve(['turn on 0,0 through 0,0']),
+    }],
+    ['example 2', {
+      expected: 2_000_000,
+      actual: solve(['toggle 0,0 through 999,999']),
+    }],
+    ['real', {
+      # expected: 13_396_307,
+      actual: solve(get_input('06.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('06.txt')) }

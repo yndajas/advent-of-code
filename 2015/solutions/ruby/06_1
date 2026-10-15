@@ -1,0 +1,87 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def action(instruction)
+  case instruction
+  in /on/
+    'on'
+  in /off/
+    'off'
+  else
+    'toggle'
+  end
+end
+
+def change(grid, x, y, action) # rubocop:disable Naming/MethodParameterName
+  grid[x][y] = case action
+  when 'on'
+    true
+  when 'off'
+    false
+  else
+    !grid[x][y]
+  end
+end
+
+def process(grid, instruction)
+  action = action(instruction)
+  start_x, start_y, end_x, end_y = instruction.scan(/\d+/).map(&:to_i)
+
+  (start_x..end_x).each do |x|
+    (start_y..end_y).each do |y|
+      change(grid, x, y, action)
+    end
+  end
+end
+
+def solve(input)
+  grid = Array.new(1000) { Array.new(1000) }
+
+  input.each { process(grid, it) }
+
+  grid.flatten.count(true)
+end
+
+test_multiple(
+  [
+    ['example 1', {
+      expected: 1_000_000,
+      actual: solve(['turn on 0,0 through 999,999']),
+    }],
+    ['example 2', {
+      expected: 1_000,
+      actual: solve(['toggle 0,0 through 999,0']),
+    }],
+    ['example 1+2', {
+      expected: 999_000,
+      actual: solve(
+        [
+          'turn on 0,0 through 999,999',
+          'toggle 0,0 through 999,0',
+        ],
+      ),
+    }],
+    ['example 3', {
+      expected: 0,
+      actual: solve(['turn off 499,499 through 500,500']),
+    }],
+    ['example 1+2+3', {
+      expected: 998_996,
+      actual: solve(
+        [
+          'turn on 0,0 through 999,999',
+          'toggle 0,0 through 999,0',
+          'turn off 499,499 through 500,500',
+        ],
+      ),
+    }],
+    ['real', {
+      expected: 377_891,
+      actual: solve(get_input('06.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('06.txt')) }
