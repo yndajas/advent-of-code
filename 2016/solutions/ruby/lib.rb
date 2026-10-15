@@ -19,11 +19,11 @@ end
 def test(description, actual:, expected: nil)
   result = case expected
   when nil
-    '❓'
+    "\033[0;33m????\033[0m"
   when actual
-    '✅'
+    "\033[0;32mpass\033[0m"
   else
-    '❌'
+    "\033[0;31mfail\033[0m"
   end
 
   output = "#{result} #{description}"
