@@ -45,7 +45,7 @@ touch "${solution_script_path}"
 chmod +x "${solution_script_path}"
 
 tmux split-window -h
-tmux send-keys "vim ${solution_script_path} ../advent-of-code-assets/${year}/input/${zero_padded_day}_example.txt" Enter
+tmux send-keys "vim ${solution_script_path} ../advent-of-code-assets/${year}/input/${zero_padded_day}{_example,}.txt" Enter
 
 tmux split-window -v
 tmux send-keys "script/run_with_reload ${solution_script_path}" Enter
