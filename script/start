@@ -54,5 +54,5 @@ tmux select-pane -t 1
 tmux split-window -v
 tmux send-keys 'irb' Enter
 
-tmux select-pane -t 2
+tmux select-pane -t 3
 tmux send-keys -t 1 "${repo_script_folder}/browse ${year} ${day}" Enter
