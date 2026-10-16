@@ -39,7 +39,7 @@ function download_prompt() {
 
   {
     echo "<a href=\"${base_url}\">Open on web</a>";
-    curl -sS "${base_url}" -H "${aoc_cookie}" | pup -p -i 0 --pre article;
+    curl -sS "${base_url}" -H "${aoc_cookie}" | htmlq article;
   } > "${target_filepath}"
 }
 
