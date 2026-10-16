@@ -46,9 +46,9 @@ script `script/start.zsh` (or `script/download.zsh`) with the year and day.
 
 The solution files in this repo rely on an associated assets repo (mine is
 stored privately on GitHub). The assets repo should have top-level folders for
-each year and an `input` and `prompt` folder within each year folder. Within the
-prompt and input folders, there should be a file per day, with the name
-containing the day zero-padded and for prompts suffixed with `.html`.
+each year and `input` and `prompts` folders within each year folder. Within the
+prompts and input folders, there should be a file per day, named with the day
+zero-padded and suffixed with `.html` for prompts and `.txt` for inputs.
 
 The path to the assets repo should be set in the `.env` file. With this set up,
 running `script/download.zsh` or `script/start.zsh` should sort the rest out.
