@@ -54,8 +54,8 @@ end
 
 alias solve solve_with_maths
 
-test('example', expected: 6, actual: solve(get_input('01_example')))
-test('real', expected: 6858, actual: solve(get_input('01')))
+test('example', expected: 6, actual: solve(get_input('01_example.txt')))
+test('real', expected: 6858, actual: solve(get_input('01.txt')))
 
-# benchmark(description: 'maths') { solve_with_maths(get_input('01')) }
-# benchmark(description: 'brute') { solve_with_brute_force(get_input('01')) }
+# benchmark(description: 'maths') { solve_with_maths(get_input('01.txt')) }
+# benchmark(description: 'brute') { solve_with_brute_force(get_input('01.txt')) }

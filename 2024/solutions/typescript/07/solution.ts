@@ -1,5 +1,5 @@
 const lines = (
-	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/07`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/07.txt`).text()
 ).split("\n");
 
 type ConcatenateOperator = "||";

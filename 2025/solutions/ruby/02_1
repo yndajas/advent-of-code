@@ -32,7 +32,7 @@ def solve(input)
   invalid_ids.sum
 end
 
-test('example', expected: 1_227_775_554, actual: solve(get_input('02_example')))
-test('real', expected: 22_062_284_697, actual: solve(get_input('02')))
+test('example', expected: 1_227_775_554, actual: solve(get_input('02_example.txt')))
+test('real', expected: 22_062_284_697, actual: solve(get_input('02.txt')))
 
-benchmark { solve(get_input('02')) }
+benchmark { solve(get_input('02.txt')) }

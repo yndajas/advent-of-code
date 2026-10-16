@@ -13,7 +13,7 @@ import (
 
 func main() {
 	godotenv.Load("../../../../.env")
-	text, err := os.ReadFile(os.Getenv("ASSETS_REPO") + "/2024/input/01")
+	text, err := os.ReadFile(os.Getenv("ASSETS_REPO") + "/2024/input/01.txt")
 	if err != nil {
 		fmt.Println("Error reading input file")
 	}

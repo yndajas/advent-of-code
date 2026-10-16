@@ -52,9 +52,9 @@ end
 
 test_multiple(
   [
-    ['example', { expected: 43, actual: solve(get_input('04_example')) }],
-    ['real', { expected: 8758, actual: solve(get_input('04')) }],
+    ['example', { expected: 43, actual: solve(get_input('04_example.txt')) }],
+    ['real', { expected: 8758, actual: solve(get_input('04.txt')) }],
   ],
 )
 
-# benchmark { solve(get_input('04')) }
+# benchmark { solve(get_input('04.txt')) }

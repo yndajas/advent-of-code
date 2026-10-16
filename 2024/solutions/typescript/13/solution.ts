@@ -1,4 +1,4 @@
-const input = await Bun.file(`${process.env.ASSETS_REPO}/2024/input/13`).text();
+const input = await Bun.file(`${process.env.ASSETS_REPO}/2024/input/13.txt`).text();
 
 type CoordinateOrMovement = { x: number; y: number };
 type Button = CoordinateOrMovement & { cost: number };

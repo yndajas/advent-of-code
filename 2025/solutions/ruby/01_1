@@ -15,5 +15,5 @@ def solve(input)
   positions.select(&:zero?).count
 end
 
-test('example', expected: 3, actual: solve(get_input('01_example')))
-test('real', expected: 1191, actual: solve(get_input('01')))
+test('example', expected: 3, actual: solve(get_input('01_example.txt')))
+test('real', expected: 1191, actual: solve(get_input('01.txt')))

@@ -26,8 +26,8 @@ end
 test(
   'example',
   expected: 3_121_910_778_619,
-  actual: solve(get_input('03_example')),
+  actual: solve(get_input('03_example.txt')),
 )
-test('real', expected: 172_601_598_658_203, actual: solve(get_input('03')))
+test('real', expected: 172_601_598_658_203, actual: solve(get_input('03.txt')))
 
-benchmark { solve(get_input('03')) }
+benchmark { solve(get_input('03.txt')) }

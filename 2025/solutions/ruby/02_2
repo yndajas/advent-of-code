@@ -40,7 +40,7 @@ def solve(input)
   end.uniq.sum
 end
 
-test('example', expected: 4_174_379_265, actual: solve(get_input('02_example')))
-test('real', expected: 46_666_175_279, actual: solve(get_input('02')))
+test('example', expected: 4_174_379_265, actual: solve(get_input('02_example.txt')))
+test('real', expected: 46_666_175_279, actual: solve(get_input('02.txt')))
 
-benchmark { solve(get_input('02')) }
+benchmark { solve(get_input('02.txt')) }

@@ -1,5 +1,5 @@
 const [defaultUnparsedRegisters, defaultUnparsedProgram] = (
-	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/17`).text()
+	await Bun.file(`${process.env.ASSETS_REPO}/2024/input/17.txt`).text()
 ).split("\n\n");
 
 type Operator = number;

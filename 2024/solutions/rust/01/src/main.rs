@@ -5,7 +5,7 @@ use utils::{numbers_from_delimited_string, read_lines};
 fn main() {
     dotenv::from_filename("../../../../.env").ok();
     let input_path = dotenv::var("ASSETS_REPO").unwrap();
-    let lines = read_lines(&(input_path + "/2024/input/01"));
+    let lines = read_lines(&(input_path + "/2024/input/01.txt"));
     println!("{}", part_one(&lines));
     println!("{}", part_two(&lines));
 }
@@ -71,13 +71,13 @@ mod tests {
 
     #[test]
     fn test_part_one() {
-        let lines = read_lines("../../../input/01");
+        let lines = read_lines("../../../input/01.txt");
         assert_eq!(part_one(&lines), 1189304);
     }
 
     #[test]
     fn test_part_two() {
-        let lines = read_lines("../../../input/01");
+        let lines = read_lines("../../../input/01.txt");
         assert_eq!(part_two(&lines), 24349736);
     }
 }

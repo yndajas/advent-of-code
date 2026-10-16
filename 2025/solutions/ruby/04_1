@@ -37,7 +37,7 @@ def solve(input)
   end.count(true)
 end
 
-test('example', expected: 13, actual: solve(get_input('04_example')))
-test('real', expected: 1397, actual: solve(get_input('04')))
+test('example', expected: 13, actual: solve(get_input('04_example.txt')))
+test('real', expected: 1397, actual: solve(get_input('04.txt')))
 
-benchmark { solve(get_input('04')) }
+benchmark { solve(get_input('04.txt')) }
