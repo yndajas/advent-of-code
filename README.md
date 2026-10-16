@@ -52,3 +52,10 @@ zero-padded and suffixed with `.html` for prompts and `.txt` for inputs.
 
 The path to the assets repo should be set in the `.env` file. With this set up,
 running `script/download.zsh` or `script/start.zsh` should sort the rest out.
+
+## LLM usage
+
+Puzzle solutions are *always* written by hand. An LLM has been used on parts of
+the tooling in `script/`, though most of that is handwritten too (with initial
+inspiration from [@cgsdev0](https://github.com/cgsdev0/advent-of-code) for the
+download/browse/start scripts).
