@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  input.reduce(0) do |sum, line|
+    numbers = line.split(/\s+/).map(&:to_i)
+
+    sum + numbers.max - numbers.min
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 18,
+      actual: solve(get_input('02_1_example.txt')),
+    }],
+    ['real', {
+      expected: 45_158,
+      actual: solve(get_input('02.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('02.txt')) }

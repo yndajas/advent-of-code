@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative 'lib'
+
+def solve(input)
+  input.reduce(0) do |sum, line|
+    numbers = line.split(/\s+/).map(&:to_i).sort_by(&:-@)
+
+    quotient = nil
+    whole_quotient = nil
+
+    numbers.each_with_index do |dividend, dividend_index|
+      numbers[(dividend_index + 1)..].each do |divisor|
+        quotient = dividend / divisor.to_f
+        whole_quotient = quotient.to_i
+
+        break if quotient == whole_quotient
+      end
+
+      break if quotient == whole_quotient
+    end
+
+    sum + whole_quotient
+  end
+end
+
+test_multiple(
+  [
+    ['example', {
+      expected: 9,
+      actual: solve(get_input('02_2_example.txt')),
+    }],
+    ['real', {
+      actual: solve(get_input('02.txt')),
+    }],
+  ],
+)
+
+benchmark { solve(get_input('02.txt')) }
